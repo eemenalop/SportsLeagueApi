@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|c:\\users\\edgar\\documents\\projects\\sportsleagueapi\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|c:\\users\\edgar\\documents\\projects\\sportsleagueapi\\services\\accountservice\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|solutionrelative:services\\accountservice\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|c:\\users\\edgar\\documents\\projects\\sportsleagueapi\\services\\baseservice\\baseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|solutionrelative:services\\baseservice\\baseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|c:\\users\\edgar\\documents\\projects\\sportsleagueapi\\services\\baseservice\\ibaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|solutionrelative:services\\baseservice\\ibaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|c:\\users\\edgar\\documents\\projects\\sportsleagueapi\\services\\accountservice\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|solutionrelative:services\\accountservice\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,25 +35,64 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAuwCIAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T19:37:03.746Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AccountService.cs",
+              "DocumentMoniker": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Services\\AccountService\\AccountService.cs",
+              "RelativeDocumentMoniker": "Services\\AccountService\\AccountService.cs",
+              "ToolTip": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Services\\AccountService\\AccountService.cs",
+              "RelativeToolTip": "Services\\AccountService\\AccountService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T19:27:44.993Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IAccountService.cs",
+              "DocumentMoniker": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Services\\AccountService\\IAccountService.cs",
+              "RelativeDocumentMoniker": "Services\\AccountService\\IAccountService.cs",
+              "ToolTip": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Services\\AccountService\\IAccountService.cs",
+              "RelativeToolTip": "Services\\AccountService\\IAccountService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T19:25:05.472Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "BaseService.cs",
               "DocumentMoniker": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Services\\BaseService\\BaseService.cs",
               "RelativeDocumentMoniker": "Services\\BaseService\\BaseService.cs",
               "ToolTip": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Services\\BaseService\\BaseService.cs",
               "RelativeToolTip": "Services\\BaseService\\BaseService.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAqwBoAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-17T04:11:43.29Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "IBaseService.cs",
               "DocumentMoniker": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Services\\BaseService\\IBaseService.cs",
               "RelativeDocumentMoniker": "Services\\BaseService\\IBaseService.cs",
               "ToolTip": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Services\\BaseService\\IBaseService.cs",
               "RelativeToolTip": "Services\\BaseService\\IBaseService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-17T03:50:52.254Z",
               "EditorCaption": ""

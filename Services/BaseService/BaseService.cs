@@ -28,13 +28,41 @@ namespace SportsLeagueApi.Services.BaseService
             await _context.SaveChangesAsync();
             return entity;
         }
-        public async Task<T> Update(int id, T entity)
+        public async Task<T> Update(T entity)
         {
-            throw new NotImplementedException();
+            var idProperty = typeof(T).GetProperty("Id");
+            if (idProperty != null) {
+                throw new Exception("Model does not hace property Id");
+            }
+
+            var id = (int)idProperty.GetValue(entity);
+            var existingEntity = await _dbSet.FindAsync(id);
+            if (existingEntity == null) { 
+                return null;
+            }
+
+            _dbSet.Entry(existingEntity).CurrentValues.SetValues(entity);
+            await _context.SaveChangesAsync();
+            return existingEntity;
         }
-        public Task<T> Delete(int id, T entity)
+        public async Task<T> Delete(T entity)
         {
-            throw new NotImplementedException();
+            var idProperty = typeof(T).GetProperty("Id");
+            if (idProperty != null)
+            {
+                throw new Exception("Model does not hace property Id");
+            }
+
+            var id = (int)idProperty.GetValue(entity);
+            var existingEntity = await _dbSet.FindAsync(id);
+            if (existingEntity == null)
+            {
+                return null;
+            }
+
+            _dbSet.Remove(existingEntity);
+            await _context.SaveChangesAsync();
+            return existingEntity;
         }
     }
 }
