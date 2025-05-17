@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+SxjDEnmueo=",
+  "dgSpecHash": "bJxoDFuOiwE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Edgar\\Documents\\Projects\\SportsLeagueApi\\SportsLeagueApi.csproj",
+  "projectFilePath": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\SportsLeagueApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Edgar\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Edgar\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.5\\microsoft.aspnetcore.openapi.9.0.5.nupkg.sha512",
