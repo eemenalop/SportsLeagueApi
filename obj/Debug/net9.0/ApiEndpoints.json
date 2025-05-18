@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "SportsLeagueApi.Controllers.BaseController\u00601[[SportsLeagueApi.Models.Account, SportsLeagueApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetAll",
+    "RelativePath": "api/Account",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
