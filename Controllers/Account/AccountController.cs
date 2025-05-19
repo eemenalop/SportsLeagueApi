@@ -9,6 +9,6 @@ namespace SportsLeagueApi.Controllers
     [ApiController]
     public class AccountController : BaseController<Account>
     {
-        public AccountController(IAccountService accountService):base(accountService) { }
+        public AccountController(IAccountService accountService) : base(accountService) { }
     }
 }

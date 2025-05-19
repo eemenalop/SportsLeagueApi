@@ -1,7 +1,15 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\",
+  "WorkspaceRootPath": "C:\\Users\\Edgar\\Documents\\Projects\\SportsLeagueApi\\",
   "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|c:\\users\\edgar\\documents\\projects\\sportsleagueapi\\services\\accountservice\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|solutionrelative:services\\accountservice\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|c:\\users\\edgar\\documents\\projects\\sportsleagueapi\\services\\accountservice\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|solutionrelative:services\\accountservice\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
     {
       "AbsoluteMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|c:\\users\\edgar\\documents\\projects\\sportsleagueapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{434FE39A-3736-754A-3C80-71D1BA71DD51}|SportsLeagueApi.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -19,15 +27,39 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABLAAAAAAAAAA==",
+              "Title": "AccountService.cs",
+              "DocumentMoniker": "C:\\Users\\Edgar\\Documents\\Projects\\SportsLeagueApi\\Services\\AccountService\\AccountService.cs",
+              "RelativeDocumentMoniker": "Services\\AccountService\\AccountService.cs",
+              "ToolTip": "C:\\Users\\Edgar\\Documents\\Projects\\SportsLeagueApi\\Services\\AccountService\\AccountService.cs",
+              "RelativeToolTip": "Services\\AccountService\\AccountService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T15:07:31.275Z",
+              "WhenOpened": "2025-05-19T18:49:18.043Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IAccountService.cs",
+              "DocumentMoniker": "C:\\Users\\Edgar\\Documents\\Projects\\SportsLeagueApi\\Services\\AccountService\\IAccountService.cs",
+              "RelativeDocumentMoniker": "Services\\AccountService\\IAccountService.cs",
+              "ToolTip": "C:\\Users\\Edgar\\Documents\\Projects\\SportsLeagueApi\\Services\\AccountService\\IAccountService.cs",
+              "RelativeToolTip": "Services\\AccountService\\IAccountService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T18:49:09.487Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Edgar\\Documents\\Projects\\SportsLeagueApi\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Edgar\\Documents\\Projects\\SportsLeagueApi\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAAQAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-18T15:07:31.275Z"
             }
           ]
         }

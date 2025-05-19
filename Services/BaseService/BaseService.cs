@@ -31,13 +31,15 @@ namespace SportsLeagueApi.Services.BaseService
         public async Task<T> Update(T entity)
         {
             var idProperty = typeof(T).GetProperty("Id");
-            if (idProperty != null) {
+            if (idProperty != null)
+            {
                 throw new Exception("Model does not hace property Id");
             }
 
             var id = (int)idProperty.GetValue(entity);
             var existingEntity = await _dbSet.FindAsync(id);
-            if (existingEntity == null) { 
+            if (existingEntity == null)
+            {
                 return null;
             }
 
