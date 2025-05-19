@@ -1,4 +1,5 @@
-using Scalar.AspNetCore;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using SportsLeagueApi.Services.BaseService;
