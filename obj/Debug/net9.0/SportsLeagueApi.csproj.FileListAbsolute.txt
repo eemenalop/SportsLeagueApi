@@ -1,5 +1,4 @@
 C:\Users\Edgar\Documents\Projects\SportsLeagueApi\bin\Debug\net9.0\appsettings.Development.json
-C:\Users\Edgar\Documents\Projects\SportsLeagueApi\bin\Debug\net9.0\appsettings.json
 C:\Users\Edgar\Documents\Projects\SportsLeagueApi\bin\Debug\net9.0\SportsLeagueApi.staticwebassets.endpoints.json
 C:\Users\Edgar\Documents\Projects\SportsLeagueApi\bin\Debug\net9.0\SportsLeagueApi.exe
 C:\Users\Edgar\Documents\Projects\SportsLeagueApi\bin\Debug\net9.0\SportsLeagueApi.deps.json

@@ -1,12 +1,44 @@
 [
   {
+    "ContainingType": "SportsLeagueApi.Controllers.AccountController",
+    "Method": "CreateAccount",
+    "RelativePath": "Account",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "account",
+        "Type": "SportsLeagueApi.Dtos.AccountDtos.CreateAccountDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SportsLeagueApi.Controllers.BaseController\u00601[[SportsLeagueApi.Models.Account, SportsLeagueApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetAll",
-    "RelativePath": "api/Account",
+    "RelativePath": "Account",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SportsLeagueApi.Controllers.BaseController\u00601[[SportsLeagueApi.Models.Account, SportsLeagueApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetById",
+    "RelativePath": "Account/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

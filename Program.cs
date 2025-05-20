@@ -10,7 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sports League API", Version = "v1" });
+    c.SwaggerDoc("v2", new OpenApiInfo { Title = "Sports League API", Version = "v2" });
+    c.SwaggerDoc("v3", new OpenApiInfo { Title = "Sports League API", Version = "v3" });
+});
 builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
 builder.Services.AddScoped<IAccountService, AccountService>();
@@ -21,8 +26,14 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(c =>
+    {
+        c.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi2_0;
+    });
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("http://localhost:5264/swagger/v1/swagger.json", "Sports League API");
+    });
 }
 
 app.UseHttpsRedirection();
