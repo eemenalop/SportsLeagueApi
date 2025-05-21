@@ -20,7 +20,19 @@ builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
 builder.Services.AddScoped<IAccountService, AccountService>();
 DatabaseConfig.ConfigureDbContext(builder.Services, builder.Configuration);
+builder.WebHost.UseUrls("http://localhost:5000");
 
+
+var myCorsPolicy = "AllowSwagger";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myCorsPolicy,
+        policy =>
+        {
+            policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+                  .AllowAnyHeader();
+        });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,11 +44,12 @@ if (app.Environment.IsDevelopment())
     });
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("http://localhost:5264/swagger/v1/swagger.json", "Sports League API");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sports League API");
     });
 }
 
 app.UseHttpsRedirection();
+app.UseCors(myCorsPolicy);
 
 
 app.Run();
