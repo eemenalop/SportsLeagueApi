@@ -7,6 +7,7 @@ namespace SportsLeagueApi.Services.AccountService
 {
     public interface IAccountService : IBaseService<Account>
     {
-        Task<Account> CreateAccount(CreateAccountDto account);
+        Task<Account> CreateAccount(CreateAccountDto accountDto);
+        Task<Account> UpdateAccount(int id, UpdateAccountDto accountDto);
     }
 }

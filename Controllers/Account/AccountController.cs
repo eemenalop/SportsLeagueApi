@@ -35,5 +35,27 @@ namespace SportsLeagueApi.Controllers
                 return BadRequest("Error creating account");
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAccount(int id, [FromBody] UpdateAccountDto account)
+        {
+            try
+            {
+                var updatedAccount = await _accountService.UpdateAccount(id, account);
+                if (updatedAccount == null)
+                {
+                    return NotFound($"Account with ID {id} not found.");
+                }
+                return Ok(updatedAccount);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch
+            {
+                return BadRequest("Error updating account");
+            }
+        }
     }
 }
