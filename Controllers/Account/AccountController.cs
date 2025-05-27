@@ -6,7 +6,7 @@ using SportsLeagueApi.Dtos.AccountDtos;
 
 namespace SportsLeagueApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/account")]
     [ApiController]
     public class AccountController : BaseController<Account>
     {

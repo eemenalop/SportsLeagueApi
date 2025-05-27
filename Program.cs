@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Services.AccountService;
+using SportsLeagueApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,14 +14,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sports League API", Version = "v1" });
-    c.SwaggerDoc("v2", new OpenApiInfo { Title = "Sports League API", Version = "v2" });
-    c.SwaggerDoc("v3", new OpenApiInfo { Title = "Sports League API", Version = "v3" });
 });
 builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
+builder.Services.AddScoped<IBaseService<Account>, BaseService<Account>>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 DatabaseConfig.ConfigureDbContext(builder.Services, builder.Configuration);
-builder.WebHost.UseUrls("http://localhost:5000");
 
 
 var myCorsPolicy = "AllowSwagger";
@@ -50,6 +49,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors(myCorsPolicy);
+app.MapControllers();
 
 
 app.Run();

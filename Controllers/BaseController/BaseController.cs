@@ -18,8 +18,15 @@ namespace SportsLeagueApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var entities = await _service.GetAll();
-            return Ok(entities);
+            try
+            {
+                var entities = await _service.GetAll();
+                return Ok(entities);
+            }
+            catch
+            {
+                return BadRequest("Error getting accounts");
+            }
         }
 
         [HttpGet("{id}")]
