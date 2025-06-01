@@ -15,8 +15,6 @@ public partial class Player
 
     public string? Position { get; set; }
 
-    public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
-
     public virtual ICollection<PlayerBasketballStat> PlayerBasketballStats { get; set; } = new List<PlayerBasketballStat>();
 
     public virtual ICollection<UserLeague> UserLeagues { get; set; } = new List<UserLeague>();

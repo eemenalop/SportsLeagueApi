@@ -1,33 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\SportsLeagueApi.csproj": {}
+    "/Users/eemena/Documents/projects/SportsLeagueApi/SportsLeagueApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\SportsLeagueApi.csproj": {
+    "/Users/eemena/Documents/projects/SportsLeagueApi/SportsLeagueApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\SportsLeagueApi.csproj",
+        "projectUniqueName": "/Users/eemena/Documents/projects/SportsLeagueApi/SportsLeagueApi.csproj",
         "projectName": "SportsLeagueApi",
-        "projectPath": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\SportsLeagueApi.csproj",
-        "packagesPath": "C:\\Users\\Edgar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Edgar\\Documents\\projects\\SportsLeagueApi\\obj\\",
+        "projectPath": "/Users/eemena/Documents/projects/SportsLeagueApi/SportsLeagueApi.csproj",
+        "packagesPath": "/Users/eemena/.nuget/packages/",
+        "outputPath": "/Users/eemena/Documents/projects/SportsLeagueApi/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Edgar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "/Users/eemena/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/opt/homebrew/Cellar/dotnet/9.0.5/libexec/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -46,7 +39,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -104,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/9.0.5/libexec/sdk/9.0.106/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -35,7 +35,6 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<TeamTournament> TeamTournaments { get; set; }
 
     public virtual DbSet<Tournament> Tournaments { get; set; }
-
     public virtual DbSet<UserLeague> UserLeagues { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -73,12 +72,6 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("phone");
             entity.Property(e => e.RoleId).HasColumnName("role_id");
-
-            entity.HasOne(d => d.Document).WithMany(p => p.Accounts)
-                .HasPrincipalKey(p => p.DocumentId)
-                .HasForeignKey(d => d.DocumentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_account_player_document");
 
             entity.HasOne(d => d.Role).WithMany(p => p.Accounts)
                 .HasForeignKey(d => d.RoleId)

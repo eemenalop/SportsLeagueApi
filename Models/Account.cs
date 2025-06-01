@@ -17,13 +17,11 @@ public partial class Account
 
     public int RoleId { get; set; }
 
-    public string DocumentId { get; set; } = null!;
+    public string? DocumentId { get; set; }
 
     public string? Phone { get; set; }
 
     public DateTime? DateOfBirth { get; set; }
-
-    public virtual Player Document { get; set; } = null!;
 
     public virtual ICollection<League> Leagues { get; set; } = new List<League>();
 
