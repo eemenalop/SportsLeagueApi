@@ -57,5 +57,28 @@ namespace SportsLeagueApi.Controllers
                 return BadRequest("Error updating account");
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAccount(int id)
+        {
+            try
+            {
+                var account = await _accountService.GetById(id);
+                if (account == null)
+                {
+                    return NotFound($"Account with ID {id} not found.");
+                }
+                await _accountService.Delete(account);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch
+            {
+                return BadRequest("Error deleting account");
+            }
+        }
     }
 }

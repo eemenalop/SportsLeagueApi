@@ -9,5 +9,6 @@ namespace SportsLeagueApi.Services.AccountService
     {
         Task<Account> CreateAccount(CreateAccountDto accountDto);
         Task<Account> UpdateAccount(int id, UpdateAccountDto accountDto);
+        Task<bool> DeleteAccount(int id);
     }
 }

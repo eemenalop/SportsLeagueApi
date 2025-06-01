@@ -52,5 +52,17 @@ namespace SportsLeagueApi.Services.AccountService
             return existingUser;
 
         }
+
+        public async Task<bool> DeleteAccount(int id)
+        {
+            var account = await _accountContext.Accounts.FindAsync(id);
+            if (account == null)
+            {
+                return false;
+            }
+            _accountContext.Accounts.Remove(account);
+            await _accountContext.SaveChangesAsync();
+            return true;
+        }
     }
 }
