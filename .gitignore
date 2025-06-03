@@ -22,3 +22,4 @@ Migrations/
 docker-compose.override.yml
 *.pid
 *.tar
+.fake
