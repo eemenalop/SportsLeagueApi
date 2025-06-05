@@ -494,15 +494,10 @@ C:/Users/Edgar/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/SportsLeagueA
 /Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/staticwebassets.build.json
 /Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/staticwebassets.development.json
 /Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/staticwebassets.build.endpoints.json
-/Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/staticwebassets/msbuild.SportsLeagueApi.Microsoft.AspNetCore.StaticWebAssets.props
-/Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/staticwebassets/msbuild.SportsLeagueApi.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-/Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/staticwebassets/msbuild.build.SportsLeagueApi.props
-/Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/staticwebassets/msbuild.buildMultiTargeting.SportsLeagueApi.props
-/Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/staticwebassets/msbuild.buildTransitive.SportsLeagueApi.props
-/Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/staticwebassets.pack.json
 /Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/SportsLe.0A209716.Up2Date
 /Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/SportsLeagueApi.dll
 /Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/refint/SportsLeagueApi.dll
 /Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/SportsLeagueApi.pdb
 /Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/SportsLeagueApi.genruntimeconfig.cache
 /Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/ref/SportsLeagueApi.dll
+/Users/eemena/Documents/projects/SportsLeagueApi/obj/Debug/net9.0/staticwebassets.build.json.cache
