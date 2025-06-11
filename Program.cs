@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Services.AccountService;
 using SportsLeagueApi.Services.RoleService;
+using SportsLeagueApi.Services.SportService;
 using SportsLeagueApi.Services.PlayerService;
 using SportsLeagueApi.Models;
 
@@ -21,6 +22,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
+builder.Services.AddScoped<ISportService, SportService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 DatabaseConfig.ConfigureDbContext(builder.Services, builder.Configuration);
 

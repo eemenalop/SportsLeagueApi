@@ -53,7 +53,7 @@ namespace SportsLeagueApi.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlayer(int id)
         {
             try
@@ -63,7 +63,7 @@ namespace SportsLeagueApi.Controllers
                 {
                     return NotFound($"Player with ID {id} not found.");
                 }
-                await _playerService.Delete(player);
+                await _playerService.DeletePlayer(id);
                 return NoContent();
             }
             catch

@@ -6,7 +6,7 @@ using SportsLeagueApi.Dtos.RoleDtos;
 
 namespace SportsLeagueApi.Controllers
 {
-    [Route("api/role")]
+    [Route("api/[controller]")]
     [ApiController]
     public class RoleController : BaseController<Role>
     {
@@ -68,7 +68,7 @@ namespace SportsLeagueApi.Controllers
                 {
                     return NotFound($"Role with ID {id} not found.");
                 }
-                await _roleService.Delete(role);
+                await _roleService.DeleteRole(id);
                 return NoContent();
             }
             catch (KeyNotFoundException ex)

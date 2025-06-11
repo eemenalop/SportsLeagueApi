@@ -15,17 +15,37 @@ namespace SportsLeagueApi.Services.SportService
         {
             _sportContext = context;
         }
-        public Task<Sport> CreateSport(CreateSportDto sportDto)
+        public async Task<Sport> CreateSport(CreateSportDto sportDto)
         {
-            throw new NotImplementedException();
+            var newSport = new Sport
+            {
+                Name = sportDto.Name
+            };
+            await _sportContext.Sports.AddAsync(newSport);
+            await _sportContext.SaveChangesAsync();
+            return newSport;
         }
-        public Task<Sport> UpdateSport(int id, UpdateSportDto sportDto)
+        public async Task<Sport> UpdateSport(int id, UpdateSportDto sportDto)
         {
-            throw new NotImplementedException();
+            var existingSport = await _sportContext.Sports.FindAsync(id);
+            if (existingSport == null)
+            {
+                throw new KeyNotFoundException($"Sport with ID {id} not found.");
+            }
+            existingSport.Name = sportDto.Name;
+            await _sportContext.SaveChangesAsync();
+            return existingSport;
         }
-        public Task<bool> DeleteSport(int id)
+        public async Task<bool> DeleteSport(int id)
         {
-            throw new NotImplementedException();
+            var sport = await _sportContext.Sports.FindAsync(id);
+            if (sport == null)
+            {
+                throw new KeyNotFoundException($"Sport with ID {id} not found");
+            }
+            _sportContext.Remove(sport);    
+            await _sportContext.SaveChangesAsync();
+            return true;
         }
     }
 }

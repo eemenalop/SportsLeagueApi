@@ -67,7 +67,7 @@ namespace SportsLeagueApi.Controllers
                 {
                     return NotFound($"Account with ID {id} not found.");
                 }
-                await _accountService.Delete(account);
+                await _accountService.DeleteAccount(id);
                 return NoContent();
             }
             catch (KeyNotFoundException ex)
