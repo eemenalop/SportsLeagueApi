@@ -13,7 +13,6 @@ namespace SportsLeagueApi.Controllers
         private readonly IAccountService _accountService;
         public AccountController(IAccountService accountService) : base(accountService)
         {
-
             _accountService = accountService;
         }
 

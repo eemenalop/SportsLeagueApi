@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Services.AccountService;
 using SportsLeagueApi.Services.RoleService;
+using SportsLeagueApi.Services.PlayerService;
 using SportsLeagueApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +19,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
-builder.Services.AddScoped<IBaseService<Account>, BaseService<Account>>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 DatabaseConfig.ConfigureDbContext(builder.Services, builder.Configuration);
 

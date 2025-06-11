@@ -32,7 +32,7 @@ namespace SportsLeagueApi.Controllers
             }
             catch
             {
-                return BadRequest("Error creating account");
+                return BadRequest("Error creating role");
             }
         }
 

@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Services;
 using SportsLeagueApi.Data;
 using Microsoft.AspNetCore.Authentication;
 using SportsLeagueApi.Dtos.PlayerDtos;
@@ -16,7 +16,7 @@ namespace SportsLeagueApi.Services.PlayerService
             _playerContext = context;
         }
 
-        public async Task<Player> CreatePlayerDto(CreatePlayerDto playerDto)
+        public async Task<Player> CreatePlayer(CreatePlayerDto playerDto)
         {
             var newPlayer = new Player
             {
@@ -48,7 +48,14 @@ namespace SportsLeagueApi.Services.PlayerService
 
         public async Task<bool> DeletePlayer(int id)
         {
-            
+            var existingPlayer = await _playerContext.Players.FindAsync(id);
+            if (existingPlayer == null)
+            {
+                throw new KeyNotFoundException($"Account with ID {id} not found.");
+            }
+            _playerContext.Players.Remove(existingPlayer);
+            await _playerContext.SaveChangesAsync();
+            return true;
         }
     }
 }
