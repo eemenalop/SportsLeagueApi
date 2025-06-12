@@ -1,9 +1,7 @@
 ﻿namespace SportsLeagueApi.Dtos.AccountDtos
 {
-    public class CreateAccountDto
+    public class CreateAccountDto : IAccountDto
     {
-        public int Id { get; set; }
-
         public string Name { get; set; } = null!;
 
         public string LastName { get; set; } = null!;

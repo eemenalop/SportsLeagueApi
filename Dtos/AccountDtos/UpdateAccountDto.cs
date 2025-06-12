@@ -1,7 +1,7 @@
 namespace SportsLeagueApi.Dtos.AccountDtos
 
 {
-    public class UpdateAccountDto
+    public class UpdateAccountDto : IAccountDto
     {
         public string Name { get; set; } = null!;
 

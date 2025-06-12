@@ -7,6 +7,7 @@ using SportsLeagueApi.Services.AccountService;
 using SportsLeagueApi.Services.RoleService;
 using SportsLeagueApi.Services.SportService;
 using SportsLeagueApi.Services.PlayerService;
+using SportsLeagueApi.Services.LeagueService;
 using SportsLeagueApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<ISportService, SportService>();
+builder.Services.AddScoped<ILeagueService, LeagueService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 DatabaseConfig.ConfigureDbContext(builder.Services, builder.Configuration);
 

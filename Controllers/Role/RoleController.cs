@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SportsLeagueApi.Services.RoleService;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Dtos.RoleDtos;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace SportsLeagueApi.Controllers
 {
@@ -30,9 +31,13 @@ namespace SportsLeagueApi.Controllers
                 return CreatedAtAction(nameof(GetById), new { id = newRole.Id }, newRole);
 
             }
-            catch
+            catch (ArgumentException ex)
             {
-                return BadRequest("Error creating role");
+                return BadRequest(ex.Message);
+            }
+            catch(Exception)
+            {
+                return BadRequest("Server error while creating role");
             }
         }
 
@@ -75,9 +80,9 @@ namespace SportsLeagueApi.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch
+            catch(Exception)
             {
-                return BadRequest("Error deleting Role");
+                return BadRequest("Server error while deleting role");
             }
         }
     }

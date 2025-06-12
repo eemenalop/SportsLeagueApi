@@ -29,9 +29,13 @@ namespace SportsLeagueApi.Controllers
                 return CreatedAtAction(nameof(GetById), new { id = newAccount.Id }, newAccount);
 
             }
-            catch
+            catch(ArgumentException ex)
             {
-                return BadRequest("Error creating account");
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Server error while creating account: {ex.Message}");
             }
         }
 
@@ -39,7 +43,7 @@ namespace SportsLeagueApi.Controllers
         public async Task<IActionResult> UpdateAccount(int id, [FromBody] UpdateAccountDto account)
         {
             try
-            {
+                {
                 var updatedAccount = await _accountService.UpdateAccount(id, account);
                 if (updatedAccount == null)
                 {
@@ -47,13 +51,13 @@ namespace SportsLeagueApi.Controllers
                 }
                 return Ok(updatedAccount);
             }
-            catch (KeyNotFoundException ex)
+            catch (ArgumentException ex)
             {
                 return NotFound(ex.Message);
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest("Error updating account");
+                return StatusCode(500, $"Server error while updating account: {ex.Message}");
             }
         }
 
@@ -70,13 +74,13 @@ namespace SportsLeagueApi.Controllers
                 await _accountService.DeleteAccount(id);
                 return NoContent();
             }
-            catch (KeyNotFoundException ex)
+            catch (ArgumentException ex)
             {
                 return NotFound(ex.Message);
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest("Error deleting account");
+                return StatusCode(500, $"Server error while deleting account: {ex.Message}");
             }
         }
     }

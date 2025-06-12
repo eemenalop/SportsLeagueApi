@@ -18,7 +18,7 @@ namespace SportsLeagueApi.Controllers
             _sportService = sportService;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateSport(CreateSportDto sportDto)
+        public async Task<IActionResult> CreateSport([FromBody] CreateSportDto sportDto)
         {
             try
             {
@@ -29,7 +29,11 @@ namespace SportsLeagueApi.Controllers
                 }
                 return CreatedAtAction(nameof(GetById), new { id = newSport.Id }, newSport);
             }
-            catch
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
             {
                 return BadRequest($"Server error while creating sport");
             }
@@ -37,7 +41,7 @@ namespace SportsLeagueApi.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> UpdateSport(int id, UpdateSportDto sportDto)
+        public async Task<IActionResult> UpdateSport(int id, [FromBody] UpdateSportDto sportDto)
         {
             try
             {
@@ -48,7 +52,11 @@ namespace SportsLeagueApi.Controllers
                 }
                 return Ok(sport);
             }
-            catch (System.Exception)
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
             {
                 return BadRequest("Server error while updating sport");
             }
@@ -69,7 +77,11 @@ namespace SportsLeagueApi.Controllers
                 await _sportService.DeleteSport(id);
                 return NoContent();
             }
-            catch
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(Exception)
             {
                 return BadRequest("Server error while deleting sport");
             }

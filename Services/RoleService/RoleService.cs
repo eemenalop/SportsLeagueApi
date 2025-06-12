@@ -17,6 +17,26 @@ namespace SportsLeagueApi.Services.RoleService
 
         public async Task<Role> CreateRole(CreateRoleDto roleDto)
         {
+            if (roleDto == null)
+            {
+                throw new ArgumentNullException(nameof(roleDto), "Role data cannot be null.");
+            }
+            if (string.IsNullOrWhiteSpace(roleDto.Name))
+            {
+                throw new ArgumentException("Role name cannot be empty.");
+            }
+            if (await _roleContext.Roles.AnyAsync(r => r.Name == roleDto.Name))
+            {
+                throw new InvalidOperationException($"Role with name {roleDto.Name} already exists.");
+            }
+            if (roleDto.Permissions == null || !roleDto.Permissions.Any())
+            {
+                throw new ArgumentException("Role must have at least one permission.");
+            }
+            if (roleDto.Description != null && roleDto.Description.Length > 500)
+            {
+                throw new ArgumentException("Role description cannot exceed 500 characters.");
+            }
             var newRole = new Role
             {
                 Name = roleDto.Name,
@@ -30,6 +50,42 @@ namespace SportsLeagueApi.Services.RoleService
 
         public async Task<Role> UpdateRole(int id, UpdateRoleDto roleDto)
         {
+            if (roleDto == null)
+            {
+                throw new ArgumentNullException(nameof(roleDto), "Role data cannot be null.");
+            }
+            if (string.IsNullOrWhiteSpace(roleDto.Name))
+            {
+                throw new ArgumentException("Role name cannot be empty.");
+            }
+            if (roleDto.Name.Length < 3)
+            {
+                throw new ArgumentException("Role name must be at least 3 characters long.");
+            }
+            if (roleDto.Name.Length > 50)
+            {
+                throw new ArgumentException("Role name cannot exceed 50 characters.");
+            }
+            if (!char.IsUpper(roleDto.Name[0]))
+            {
+                throw new ArgumentException("Role name must start with an uppercase letter.");
+            }
+            if (roleDto.Permissions == null || !roleDto.Permissions.Any())
+            {
+                throw new ArgumentException("Role must have at least one permission.");
+            }
+            if (roleDto.Description != null && roleDto.Description.Length > 500)
+            {
+                throw new ArgumentException("Role description cannot exceed 500 characters.");
+            }
+            if (await _roleContext.Roles.AnyAsync(r => r.Name == roleDto.Name && r.Id != id))
+            {
+                throw new InvalidOperationException($"Role with name {roleDto.Name} already exists.");
+            }
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid role ID.");
+            }
             var existingRole = await _roleContext.Roles.FindAsync(id);
             if (existingRole == null)
             {
@@ -44,6 +100,14 @@ namespace SportsLeagueApi.Services.RoleService
 
         public async Task<bool> DeleteRole(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid role ID.");
+            }
+            if (await _roleContext.Roles.AnyAsync(r => r.Id == id && r.Name == "Admin"))
+            {
+                throw new InvalidOperationException("Cannot delete the Admin role.");
+            }
             var role = await _roleContext.Roles.FindAsync(id);
             if (role == null) {
                 throw new KeyNotFoundException($"Account with ID {id} not found.");

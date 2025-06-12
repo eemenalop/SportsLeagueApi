@@ -30,13 +30,17 @@ namespace SportsLeagueApi.Controllers
                 }
                 return CreatedAtAction(nameof(GetById), new { id = newPlayer.Id }, newPlayer);
             }
-            catch
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
             {
                 return BadRequest("Server error while creating player");
             }
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePlayer(int id, UpdatePlayerDto playerDto)
+        public async Task<IActionResult> UpdatePlayer(int id, [FromBody] UpdatePlayerDto playerDto)
         {
             try
             {
@@ -47,7 +51,11 @@ namespace SportsLeagueApi.Controllers
                 }
                 return Ok(player);
             }
-            catch
+            catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
             {
                 return BadRequest("Server error while updating player");
             }
@@ -66,7 +74,11 @@ namespace SportsLeagueApi.Controllers
                 await _playerService.DeletePlayer(id);
                 return NoContent();
             }
-            catch
+            catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
             {
                 return BadRequest("Server error while deleting player");
             }
