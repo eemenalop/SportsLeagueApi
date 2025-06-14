@@ -1,6 +1,6 @@
 namespace SportsLeagueApi.Dtos.SportDtos
 {
-    public class UpdateSportDto
+    public class CreateSportDto : ISportDto
     {
         public string Name { get; set; }
     }

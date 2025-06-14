@@ -34,9 +34,9 @@ namespace SportsLeagueApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Server error while creating player");
+                return StatusCode(500, "Server error while creating player: " + ex.Message);
             }
         }
         [HttpPut("{id}")]
@@ -55,9 +55,9 @@ namespace SportsLeagueApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Server error while updating player");
+                return StatusCode(500, "Server error while updating player: " + ex.Message);
             }
         }
 
@@ -78,9 +78,9 @@ namespace SportsLeagueApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Server error while deleting player");
+                return StatusCode(500, "Server error while deleting player: " + ex.Message);
             }
         }
     }

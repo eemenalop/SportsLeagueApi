@@ -15,37 +15,7 @@ namespace SportsLeagueApi.Services.SportService
         {
             _sportContext = context;
         }
-        public async Task<Sport> CreateSport(CreateSportDto sportDto)
-        {
-            if (sportDto == null)
-            {
-                throw new ArgumentNullException(nameof(sportDto), "Sport data cannot be null.");
-            }
-            var newSport = new Sport
-            {
-                Name = sportDto.Name
-            };
-            if (string.IsNullOrWhiteSpace(newSport.Name))
-            {
-                throw new ArgumentException("Sport name cannot be null or empty.");
-            }
-            if (newSport.Name.Length < 3)
-            {
-                throw new ArgumentException("Sport name must be at least 3 characters long.");
-            }
-            if (newSport.Name.Length > 50)
-            {
-                throw new ArgumentException("Sport name must not exceed 50 characters.");
-            }
-            if (!char.IsUpper(newSport.Name[0]))
-            {
-                throw new ArgumentException("Sport name must start with an uppercase letter.");
-            }
-            await _sportContext.Sports.AddAsync(newSport);
-            await _sportContext.SaveChangesAsync();
-            return newSport;
-        }
-        public async Task<Sport> UpdateSport(int id, UpdateSportDto sportDto)
+        private void ValidateSportDto(ISportDto sportDto)
         {
             if (sportDto == null)
             {
@@ -53,19 +23,46 @@ namespace SportsLeagueApi.Services.SportService
             }
             if (string.IsNullOrWhiteSpace(sportDto.Name))
             {
-                throw new ArgumentException("Sport name is required.", nameof(sportDto.Name));
+                throw new ArgumentException("Sport name cannot be empty.", nameof(sportDto.Name));
             }
             if (sportDto.Name.Length < 3)
             {
-                throw new ArgumentException("Sport name must be at least 3 characters long.");
+                throw new ArgumentException("Sport name must be at least 3 characters long.", nameof(sportDto.Name));
             }
             if (sportDto.Name.Length > 50)
             {
-                throw new ArgumentException("Sport name must not exceed 50 characters.");
+                throw new ArgumentException("Sport name must not exceed 50 characters.", nameof(sportDto.Name));
             }
             if (!char.IsUpper(sportDto.Name[0]))
             {
-                throw new ArgumentException("Sport name must start with an uppercase letter.");
+                throw new ArgumentException("Sport name must start with an uppercase letter.", nameof(sportDto.Name));
+            }
+        }
+        public async Task<Sport> CreateSport(CreateSportDto sportDto)
+        {
+            ValidateSportDto(sportDto);
+            if (await _sportContext.Sports.AnyAsync(s => s.Name == sportDto.Name))
+            {
+                throw new ArgumentException($"Sport with name {sportDto.Name} already exists.");
+            }
+            var newSport = new Sport
+            {
+                Name = sportDto.Name
+            };
+            await _sportContext.Sports.AddAsync(newSport);
+            await _sportContext.SaveChangesAsync();
+            return newSport;
+        }
+        public async Task<Sport> UpdateSport(int id, UpdateSportDto sportDto)
+        {
+            ValidateSportDto(sportDto);
+            if (await _sportContext.Sports.AnyAsync(s => s.Name == sportDto.Name && s.Id != id))
+            {
+                throw new ArgumentException($"Sport with name {sportDto.Name} already exists.");
+            }
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid sport ID provided.", nameof(id));
             }
             var existingSport = await _sportContext.Sports.FindAsync(id);
             if (existingSport == null)

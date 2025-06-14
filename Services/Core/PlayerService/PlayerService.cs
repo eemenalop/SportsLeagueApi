@@ -15,8 +15,7 @@ namespace SportsLeagueApi.Services.PlayerService
         {
             _playerContext = context;
         }
-
-        public async Task<Player> CreatePlayer(CreatePlayerDto playerDto)
+        private void ValidatePlayerDto(IPlayerDto playerDto)
         {
             if (playerDto == null)
             {
@@ -54,6 +53,10 @@ namespace SportsLeagueApi.Services.PlayerService
             {
                 throw new ArgumentException("Player document ID must contain only digits.");
             }
+        }
+        public async Task<Player> CreatePlayer(CreatePlayerDto playerDto)
+        {
+            ValidatePlayerDto(playerDto);
             var newPlayer = new Player
             {
                 Name = playerDto.Name,
@@ -63,47 +66,24 @@ namespace SportsLeagueApi.Services.PlayerService
             };
             await _playerContext.Players.AddAsync(newPlayer);
             await _playerContext.SaveChangesAsync();
+            
+            var userLeague = new UserLeague
+            {
+                PlayerId = newPlayer.Id,
+                LeagueId = playerDto.LeagueId
+            };
+            await _playerContext.UserLeagues.AddAsync(userLeague);
+            await _playerContext.SaveChangesAsync();
             return newPlayer;
         }
 
         public async Task<Player> UpdatePlayer(int id, UpdatePlayerDto playerDto)
         {
-            if (playerDto == null)
+            if (id <= 0)
             {
-                throw new ArgumentNullException(nameof(playerDto), "Player data cannot be null.");
+                throw new ArgumentException("Invalid player ID.");
             }
-            if (string.IsNullOrWhiteSpace(playerDto.Name))
-            {
-                throw new ArgumentException("Player name cannot be empty.");
-            }
-            if (string.IsNullOrWhiteSpace(playerDto.LastName))
-            {
-                throw new ArgumentException("Player last name cannot be empty.");
-            }
-            if (playerDto.Name.Length > 50)
-            {
-                throw new ArgumentException("Player name must not exceed 50 characters.");
-            }
-            if (playerDto.LastName.Length > 50)
-            {
-                throw new ArgumentException("Player last name must not exceed 50 characters.");
-            }
-            if (!char.IsUpper(playerDto.Name[0]))
-            {
-                throw new ArgumentException("Player name must start with an uppercase letter.");
-            }
-            if (!char.IsUpper(playerDto.LastName[0]))
-            {
-                throw new ArgumentException("Player last name must start with an uppercase letter.");
-            }
-            if (string.IsNullOrWhiteSpace(playerDto.DocumentId))
-            {
-                throw new ArgumentException("Player document ID cannot be empty.");
-            }
-            if(!playerDto.DocumentId.All(char.IsDigit))
-            {
-                throw new ArgumentException("Player document ID must contain only digits.");
-            }
+            ValidatePlayerDto(playerDto);
             var existingPlayer = await _playerContext.Players.FindAsync(id);
             if (existingPlayer == null)
             {

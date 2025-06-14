@@ -1,6 +1,6 @@
 namespace SportsLeagueApi.Dtos.RoleDtos
 {
-    public class CreateRoleDto
+    public class CreateRoleDto : IRoleDto
     {
         public string Name { get; set; } = null!;
         public string? Permissions { get; set; }

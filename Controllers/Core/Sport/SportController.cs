@@ -33,9 +33,9 @@ namespace SportsLeagueApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest($"Server error while creating sport");
+                return StatusCode(500, $"Server error while creating sport: {ex.Message}");
             }
         }
 
@@ -56,9 +56,9 @@ namespace SportsLeagueApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Server error while updating sport");
+                return StatusCode(500, $"Server error while updating sport: {ex.Message}");
             }
         }
 
@@ -81,9 +81,9 @@ namespace SportsLeagueApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                return BadRequest("Server error while deleting sport");
+                return StatusCode(500, $"Server error while deleting sport: {ex.Message}");
             }
         }
     }

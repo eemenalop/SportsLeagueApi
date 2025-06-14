@@ -35,9 +35,9 @@ namespace SportsLeagueApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                return BadRequest("Server error while creating role");
+                return StatusCode(500, $"Server error while creating role: {ex.Message}");
             }
         }
 
@@ -53,13 +53,13 @@ namespace SportsLeagueApi.Controllers
                 }
                 return Ok(updatedRole);
             }
-            catch (KeyNotFoundException ex)
+            catch (ArgumentException ex)
             {
-                return NotFound(ex.Message);
+                return BadRequest(ex.Message);
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest("Error updating role");
+                return StatusCode(500, $"Server error while updating role: {ex.Message}");
             }
         }
 
@@ -76,13 +76,13 @@ namespace SportsLeagueApi.Controllers
                 await _roleService.DeleteRole(id);
                 return NoContent();
             }
-            catch (KeyNotFoundException ex)
+            catch (ArgumentException ex)
             {
-                return NotFound(ex.Message);
+                return BadRequest(ex.Message);
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                return BadRequest("Server error while deleting role");
+                return StatusCode(500,$"Server error while deleting role: {ex.Message}");
             }
         }
     }
