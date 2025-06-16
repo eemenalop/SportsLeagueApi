@@ -15,56 +15,24 @@ namespace SportsLeagueApi.Services.BaseService
         }
         public async Task<IEnumerable<T>> GetAll()
         {
+            if (_dbSet == null)
+            {
+                throw new ArgumentException("DbSet is not initialized.", nameof(_dbSet));
+            }
             return await _dbSet.ToListAsync();
         }
         public async Task<T> GetById(int id)
         {
-            return await _dbSet.FindAsync(id);
-        }
-
-        public async Task<T> Create(T entity)
-        {
-            _dbSet.Add(entity);
-            await _context.SaveChangesAsync();
+            if (id <= 0)
+            {
+                throw new ArgumentException("ID must be greater than zero.", nameof(id));
+            }
+            var entity = await _dbSet.FindAsync(id);
+            if (entity == null)
+            {
+                throw new KeyNotFoundException($"Entity of type {typeof(T).Name} with ID {id} was not found.");
+            }
             return entity;
-        }
-        public async Task<T> Update(T entity)
-        {
-            var idProperty = typeof(T).GetProperty("Id");
-            if (idProperty != null)
-            {
-                throw new Exception("Model does not hace property Id");
-            }
-
-            var id = (int)idProperty.GetValue(entity);
-            var existingEntity = await _dbSet.FindAsync(id);
-            if (existingEntity == null)
-            {
-                return null;
-            }
-
-            _dbSet.Entry(existingEntity).CurrentValues.SetValues(entity);
-            await _context.SaveChangesAsync();
-            return existingEntity;
-        }
-        public async Task<T> Delete(T entity)
-        {
-            var idProperty = typeof(T).GetProperty("Id");
-            if (idProperty != null)
-            {
-                throw new Exception("Model does not hace property Id");
-            }
-
-            var id = (int)idProperty.GetValue(entity);
-            var existingEntity = await _dbSet.FindAsync(id);
-            if (existingEntity == null)
-            {
-                return null;
-            }
-
-            _dbSet.Remove(existingEntity);
-            await _context.SaveChangesAsync();
-            return existingEntity;
         }
     }
 }

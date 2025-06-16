@@ -43,6 +43,8 @@ namespace SportsLeagueApi.Services.AccountService
                 throw new ArgumentException("Document ID is required.");
             if (!accountDto.DocumentId.All(char.IsDigit))
                 throw new ArgumentException("Document ID must contain only digits.");
+            if (string.IsNullOrWhiteSpace(accountDto.Phone))
+                throw new ArgumentException("Phone must contain only digits.");
             if (!accountDto.Phone.All(char.IsDigit))
                 throw new ArgumentException("Phone must contain only digits.");
             if (accountDto.DateOfBirth == default)

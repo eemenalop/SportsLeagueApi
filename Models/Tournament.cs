@@ -11,6 +11,10 @@ public partial class Tournament
 
     public int LeagueId { get; set; }
 
+    public DateTime StartDate { get; set; }
+
+    public string Status { get; set; } = null!;
+
     public virtual ICollection<BasketballGame> BasketballGames { get; set; } = new List<BasketballGame>();
 
     public virtual League League { get; set; } = null!;

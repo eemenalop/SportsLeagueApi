@@ -23,9 +23,13 @@ namespace SportsLeagueApi.Controllers
                 var entities = await _service.GetAll();
                 return Ok(entities);
             }
-            catch
+            catch(ArgumentException ex)
             {
-                return BadRequest("Error getting accounts");
+                return BadRequest("Error getting data: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while processing your request: {ex.Message}");
             }
         }
 
@@ -33,12 +37,23 @@ namespace SportsLeagueApi.Controllers
 
         public async Task<IActionResult> GetById(int id)
         {
-            var entity = await _service.GetById(id);
-            if (entity == null)
+            try
             {
-                return NotFound();
-            }
+                var entity = await _service.GetById(id);
+                if (entity == null)
+                {
+                    return NotFound();
+                }
             return Ok(entity);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest("Error getting data: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while processing your request: {ex.Message}");
+            }
         }
     }
 }

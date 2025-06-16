@@ -35,6 +35,7 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<TeamTournament> TeamTournaments { get; set; }
 
     public virtual DbSet<Tournament> Tournaments { get; set; }
+
     public virtual DbSet<UserLeague> UserLeagues { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -284,6 +285,10 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
                 .HasColumnName("name");
+            entity.Property(e => e.StartDate).HasColumnName("start_date");
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .HasColumnName("status");
 
             entity.HasOne(d => d.League).WithMany(p => p.Tournaments)
                 .HasForeignKey(d => d.LeagueId)
