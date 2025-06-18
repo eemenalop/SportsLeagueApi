@@ -205,6 +205,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Steals).HasColumnName("steals");
             entity.Property(e => e.Threepta).HasColumnName("threepta");
             entity.Property(e => e.Threeptm).HasColumnName("threeptm");
+            entity.Property(e => e.Turnovers).HasColumnName("turnovers");
 
             entity.HasOne(d => d.Game).WithMany(p => p.PlayerBasketballStats)
                 .HasForeignKey(d => d.GameId)

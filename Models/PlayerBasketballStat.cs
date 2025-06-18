@@ -35,6 +35,8 @@ public partial class PlayerBasketballStat
 
     public int? Fouls { get; set; }
 
+    public int? Turnovers { get; set; }
+
     public virtual BasketballGame Game { get; set; } = null!;
 
     public virtual Player Player { get; set; } = null!;

@@ -11,7 +11,9 @@ using SportsLeagueApi.Services.LeagueService;
 using SportsLeagueApi.Services.Basketball.TournamentService;
 using SportsLeagueApi.Services.Basketball.BasketballTeamService;
 using SportsLeagueApi.Services.Basketball.BasketballGameService;
+using SportsLeagueApi.Services.Basketball.PlayerBasketballStatsService;
 using SportsLeagueApi.Models;
+using SportsLeagueApi.Dtos.Basketball.PlayerBasketballStatsDtos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ITournamentService, TournamentService>();
 builder.Services.AddScoped<IBasketballTeamService, BasketballTeamService>();
 builder.Services.AddScoped<IBasketballGameService, BasketballGameService>();
+builder.Services.AddScoped<IPlayerBasketballStatsService, PlayerBasketballStatsService>();
 DatabaseConfig.ConfigureDbContext(builder.Services, builder.Configuration);
 
 
