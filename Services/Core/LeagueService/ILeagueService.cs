@@ -2,7 +2,7 @@ using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Dtos.LeagueDtos;
 
-namespace SportsLeagueApi.Services.LeagueService
+namespace SportsLeagueApi.Services.Core.LeagueService
 {
     public interface ILeagueService : IBaseService<League>
     {

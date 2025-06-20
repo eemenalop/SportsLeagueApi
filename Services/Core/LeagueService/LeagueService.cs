@@ -4,7 +4,7 @@ using SportsLeagueApi.Data;
 using SportsLeagueApi.Dtos.LeagueDtos;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace SportsLeagueApi.Services.LeagueService
+namespace SportsLeagueApi.Services.Core.LeagueService
 {
     public class LeagueService : BaseService<League>, ILeagueService
     {

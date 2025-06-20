@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using SportsLeagueApi.Data;
 using SportsLeagueApi.Dtos.SportDtos;
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Services.SportService;
+using SportsLeagueApi.Services.Core.SportService;
 
 namespace SportsLeagueApi.Controllers
 {
@@ -33,6 +33,10 @@ namespace SportsLeagueApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Sport not found: {ex.Message}");
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Server error while creating sport: {ex.Message}");
@@ -55,6 +59,10 @@ namespace SportsLeagueApi.Controllers
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Sport with ID {id} not found: {ex.Message}");
             }
             catch (Exception ex)
             {

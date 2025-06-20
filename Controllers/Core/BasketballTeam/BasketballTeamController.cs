@@ -1,29 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Services.Basketball.BasketballTeamService;
+using SportsLeagueApi.Services.Core.TeamService;
 using SportsLeagueApi.Dtos.Basketball.BasketballTeamDtos;
 using SportsLeagueApi.Services.BaseService;
 
-namespace SportsLeagueApi.Controllers.Basketball.BasketballTeamController
+namespace SportsLeagueApi.Controllers.Core.TeamController
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BasketballTeamcontroller : BaseController<BasketballTeam>
+    public class TeamController : BaseController<Team>
     {
-        private readonly IBasketballTeamService _basketballTeamService;
+        private readonly ITeamService _teamService;
 
-        public BasketballTeamcontroller(IBasketballTeamService basketballTeamService) : base(basketballTeamService)
+        public TeamController(ITeamService teamService) : base(teamService)
         {
-            _basketballTeamService = basketballTeamService;
+            _teamService = teamService;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateBasketballTeam([FromBody] CreateBasketballTeamDto teamDto)
+        public async Task<IActionResult> CreateTeam([FromBody] CreateTeamDto teamDto)
         {
             try
             {
                 if (teamDto == null)
                     throw new ArgumentException("Team data cannot be null.");
-                var team = await _basketballTeamService.CreateBasketballTeam(teamDto);
+                var team = await _teamService.CreateTeam(teamDto);
                 return CreatedAtAction(nameof(GetById), new { id = team.Id }, team);
             }
             catch (ArgumentException ex)
@@ -36,7 +36,7 @@ namespace SportsLeagueApi.Controllers.Basketball.BasketballTeamController
             }
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBasketballTeam(int id, [FromBody] UpdateBasketballTeamDto teamDto)
+        public async Task<IActionResult> UpdateTeam(int id, [FromBody] UpdateTeamDto teamDto)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace SportsLeagueApi.Controllers.Basketball.BasketballTeamController
                 if (teamDto == null)
                     throw new ArgumentException("Team data cannot be null.");
 
-                var updatedTeam = await _basketballTeamService.UpdateBasketballTeam(id, teamDto);
+                var updatedTeam = await _teamService.UpdateTeam(id, teamDto);
                 if (updatedTeam == null)
                 {
                     return NotFound($"Basketball team with ID {id} not found.");
@@ -56,20 +56,24 @@ namespace SportsLeagueApi.Controllers.Basketball.BasketballTeamController
             {
                 return BadRequest(ex.Message);
             }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while updating the basketball team: " + ex.Message);
             }
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBasketballTeam(int id)
+        public async Task<IActionResult> DeleteTeam(int id)
         {
             try
             {
                 if (id <= 0)
                     throw new ArgumentException("Invalid team ID.");
 
-                var result = await _basketballTeamService.DeleteBasketballTeam(id);
+                var result = await _teamService.DeleteTeam(id);
                 if (!result)
                 {
                     return NotFound($"Basketball team with ID {id} not found.");
@@ -79,6 +83,10 @@ namespace SportsLeagueApi.Controllers.Basketball.BasketballTeamController
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Basketball team not found: {ex.Message}");
             }
             catch (Exception ex)
             {

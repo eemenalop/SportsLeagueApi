@@ -1,4 +1,4 @@
-namespace SportsLeagueApi.Dtos.Basketball.TournamentDtos
+namespace SportsLeagueApi.Dtos.Core.TournamentDtos
 {
     public class CreateTournamentDto : ITournamentDto
     {

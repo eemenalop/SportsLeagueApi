@@ -3,7 +3,7 @@ using SportsLeagueApi.Dtos.RoleDtos;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Data;
 
-namespace SportsLeagueApi.Services.RoleService
+namespace SportsLeagueApi.Services.Core.RoleService
 {
     public interface IRoleService : IBaseService<Role>
     {

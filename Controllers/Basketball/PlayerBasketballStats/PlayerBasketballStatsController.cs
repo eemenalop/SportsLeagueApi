@@ -54,6 +54,10 @@ namespace SportsLeagueApi.Controllers.Basketball.playerBasketballStats
             {
                 return BadRequest(ex.Message);
             }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Player basketball stats not found: {ex.Message}");
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while updating the basketball stats: " + ex.Message);
@@ -68,7 +72,7 @@ namespace SportsLeagueApi.Controllers.Basketball.playerBasketballStats
                 if (id <= 0)
                     throw new ArgumentException("Invalid stats ID.");
                 var result = await _playerBasketballStats.DeletePlayerBasketballStats(id);
-                if (result == null)
+                if (!result)
                 {
                     return NotFound($"Player basketball stats with ID {id} not found.");
                 }
@@ -77,6 +81,10 @@ namespace SportsLeagueApi.Controllers.Basketball.playerBasketballStats
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Player basketball stats not found: {ex.Message}");
             }
             catch (Exception ex)
             {

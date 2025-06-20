@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Services.Basketball.TournamentService;
-using SportsLeagueApi.Dtos.Basketball.TournamentDtos;
+using SportsLeagueApi.Services.Core.TournamentService;
+using SportsLeagueApi.Dtos.Core.TournamentDtos;
 using SportsLeagueApi.Services.BaseService;
 
-namespace SportsLeagueApi.Controllers.Basketball.TournamentController
+namespace SportsLeagueApi.Controllers.Core.TournamentController
 {
 
     [Route("api/[controller]")]
@@ -33,6 +33,10 @@ namespace SportsLeagueApi.Controllers.Basketball.TournamentController
             {
                 return BadRequest(ex.Message);
             }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"League not found: {ex.Message}");
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while creating the tournament: " + ex.Message);
@@ -60,6 +64,10 @@ namespace SportsLeagueApi.Controllers.Basketball.TournamentController
             {
                 return BadRequest(ex.Message);
             }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while updating the tournament: " + ex.Message);
@@ -83,6 +91,10 @@ namespace SportsLeagueApi.Controllers.Basketball.TournamentController
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Tournament not found: {ex.Message}");
             }
             catch (Exception ex)
             {

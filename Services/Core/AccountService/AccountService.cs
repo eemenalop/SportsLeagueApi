@@ -5,7 +5,7 @@ using SportsLeagueApi.Data;
 using SportsLeagueApi.Dtos.AccountDtos;
 using SportsLeagueApi.Dtos.LeagueDtos;
 
-namespace SportsLeagueApi.Services.AccountService
+namespace SportsLeagueApi.Services.Core.AccountService
 {
     public class AccountService : BaseService<Account>, IAccountService
     {
@@ -109,7 +109,7 @@ namespace SportsLeagueApi.Services.AccountService
             var account = await _accountContext.Accounts.FindAsync(id);
             if (account == null)
             {
-                return false;
+                throw new KeyNotFoundException($"Account with ID {id} not found.");
             }
             _accountContext.Accounts.Remove(account);
             await _accountContext.SaveChangesAsync();

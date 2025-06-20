@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using SportsLeagueApi.Services.BaseService;
-using SportsLeagueApi.Services.SportService;
+using SportsLeagueApi.Services.Core.SportService;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Data;
 using SportsLeagueApi.Dtos.SportDtos;
 
-namespace SportsLeagueApi.Services.SportService
+namespace SportsLeagueApi.Services.Core.SportService
 {
     public class SportService : BaseService<Sport>, ISportService
     {

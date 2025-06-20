@@ -4,7 +4,7 @@ using SportsLeagueApi.Dtos.RoleDtos;
 using SportsLeagueApi.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace SportsLeagueApi.Services.RoleService
+namespace SportsLeagueApi.Services.Core.RoleService
 {
     public class RoleService : BaseService<Role>, IRoleService
     {
@@ -77,7 +77,7 @@ namespace SportsLeagueApi.Services.RoleService
             var existingRole = await _roleContext.Roles.FindAsync(id);
             if (existingRole == null)
             {
-                throw new ArgumentException($"Account with ID {id} not found.");
+                throw new KeyNotFoundException($"Account with ID {id} not found.");
             }
             existingRole.Name = roleDto.Name;
             existingRole.Description = roleDto.Description;
@@ -98,7 +98,7 @@ namespace SportsLeagueApi.Services.RoleService
             }
             var role = await _roleContext.Roles.FindAsync(id);
             if (role == null) {
-                throw new ArgumentException($"Account with ID {id} not found.");
+                throw new KeyNotFoundException($"Account with ID {id} not found.");
             }
             _roleContext.Roles.Remove(role);
             await _roleContext.SaveChangesAsync();

@@ -2,7 +2,7 @@ using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Dtos.PlayerDtos;
 
-namespace SportsLeagueApi.Services.PlayerService
+namespace SportsLeagueApi.Services.Core.PlayerService
 {
     public interface IPlayerService : IBaseService<Player>
     {

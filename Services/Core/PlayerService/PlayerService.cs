@@ -5,7 +5,7 @@ using SportsLeagueApi.Data;
 using Microsoft.AspNetCore.Authentication;
 using SportsLeagueApi.Dtos.PlayerDtos;
 
-namespace SportsLeagueApi.Services.PlayerService
+namespace SportsLeagueApi.Services.Core.PlayerService
 {
     public class PlayerService : BaseService<Player>, IPlayerService
     {
@@ -108,6 +108,12 @@ namespace SportsLeagueApi.Services.PlayerService
             if (existingPlayer == null)
             {
                 throw new KeyNotFoundException($"Account with ID {id} not found.");
+            }
+            var userLeague = await _playerContext.UserLeagues
+                .FirstOrDefaultAsync(ul => ul.PlayerId == id);
+            if (userLeague != null)
+            {
+                _playerContext.UserLeagues.Remove(userLeague);
             }
             _playerContext.Players.Remove(existingPlayer);
             await _playerContext.SaveChangesAsync();

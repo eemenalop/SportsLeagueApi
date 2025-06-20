@@ -3,21 +3,19 @@ using System.Collections.Generic;
 
 namespace SportsLeagueApi.Models;
 
-public partial class Tournament
+public partial class Team
 {
     public int Id { get; set; }
 
     public string Name { get; set; } = null!;
 
-    public int LeagueId { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
-    public DateTime StartDate { get; set; }
+    public string? LogoUrl { get; set; }
 
-    public string Status { get; set; } = null!;
+    public virtual ICollection<BasketballGame> BasketballGameTeamANavigations { get; set; } = new List<BasketballGame>();
 
-    public virtual ICollection<BasketballGame> BasketballGames { get; set; } = new List<BasketballGame>();
-
-    public virtual League League { get; set; } = null!;
+    public virtual ICollection<BasketballGame> BasketballGameTeamBNavigations { get; set; } = new List<BasketballGame>();
 
     public virtual ICollection<PlayerTeam> PlayerTeams { get; set; } = new List<PlayerTeam>();
 

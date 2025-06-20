@@ -67,10 +67,10 @@ namespace SportsLeagueApi.Services.Basketball.PlayerBasketballStatsService
             await _playerBasketballStatsContext.SaveChangesAsync();
             return newBasketballStat;
         }
-        public Task<PlayerBasketballStat> UpdatePlayerBasketballStats(int id, UpdatePlayerBasketballStatsDto basketStatsDto)
+        public async Task<PlayerBasketballStat> UpdatePlayerBasketballStats(int id, UpdatePlayerBasketballStatsDto basketStatsDto)
         {
             ValidateBasketballStats(basketStatsDto);
-            PlayerBasketballStat? existingStat = _playerBasketballStatsContext.PlayerBasketballStats.Find(id);
+            PlayerBasketballStat? existingStat = await _playerBasketballStatsContext.PlayerBasketballStats.FindAsync(id);
             if (existingStat == null)
             {
                 throw new KeyNotFoundException($"PlayerBasketballStat with ID {id} not found.");
@@ -92,7 +92,7 @@ namespace SportsLeagueApi.Services.Basketball.PlayerBasketballStatsService
             existingStat.Turnovers = basketStatsDto.Turnovers;
             _playerBasketballStatsContext.PlayerBasketballStats.Update(existingStat);
             _playerBasketballStatsContext.SaveChanges();
-            return Task.FromResult(existingStat);
+            return existingStat;
         }
         public async Task<bool> DeletePlayerBasketballStats(int id)
         {

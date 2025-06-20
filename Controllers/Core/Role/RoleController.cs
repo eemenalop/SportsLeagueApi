@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SportsLeagueApi.Services.RoleService;
+using SportsLeagueApi.Services.Core.RoleService;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Dtos.RoleDtos;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -57,7 +57,11 @@ namespace SportsLeagueApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch(Exception ex)
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, $"Server error while updating role: {ex.Message}");
             }
@@ -80,9 +84,13 @@ namespace SportsLeagueApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch(Exception ex)
+            catch (KeyNotFoundException ex)
             {
-                return StatusCode(500,$"Server error while deleting role: {ex.Message}");
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Server error while deleting role: {ex.Message}");
             }
         }
     }

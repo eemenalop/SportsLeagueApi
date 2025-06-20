@@ -23,9 +23,9 @@ public partial class BasketballGame
 
     public virtual ICollection<PlayerBasketballStat> PlayerBasketballStats { get; set; } = new List<PlayerBasketballStat>();
 
-    public virtual BasketballTeam TeamANavigation { get; set; } = null!;
+    public virtual Team TeamANavigation { get; set; } = null!;
 
-    public virtual BasketballTeam TeamBNavigation { get; set; } = null!;
+    public virtual Team TeamBNavigation { get; set; } = null!;
 
     public virtual Tournament Tournament { get; set; } = null!;
 }

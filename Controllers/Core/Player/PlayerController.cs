@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportsLeagueApi.Dtos.PlayerDtos;
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Services.PlayerService;
+using SportsLeagueApi.Services.Core.PlayerService;
 
 
 namespace SportsLeagueApi.Controllers
@@ -51,9 +51,9 @@ namespace SportsLeagueApi.Controllers
                 }
                 return Ok(player);
             }
-            catch(ArgumentException ex)
+            catch(KeyNotFoundException ex)
             {
-                return BadRequest(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -74,9 +74,9 @@ namespace SportsLeagueApi.Controllers
                 await _playerService.DeletePlayer(id);
                 return NoContent();
             }
-            catch(ArgumentException ex)
+            catch(KeyNotFoundException ex)
             {
-                return BadRequest(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

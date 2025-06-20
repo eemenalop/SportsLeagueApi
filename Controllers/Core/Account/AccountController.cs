@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SportsLeagueApi.Services.AccountService;
+using SportsLeagueApi.Services.Core.AccountService;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Dtos.AccountDtos;
 
@@ -51,7 +51,7 @@ namespace SportsLeagueApi.Controllers
                 }
                 return Ok(updatedAccount);
             }
-            catch (ArgumentException ex)
+            catch (KeyNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
@@ -74,7 +74,7 @@ namespace SportsLeagueApi.Controllers
                 await _accountService.DeleteAccount(id);
                 return NoContent();
             }
-            catch (ArgumentException ex)
+            catch (KeyNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }

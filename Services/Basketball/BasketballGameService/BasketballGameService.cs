@@ -42,11 +42,11 @@ namespace SportsLeagueApi.Services.Basketball.BasketballGameService
             {
                 throw new ArgumentException("Game type cannot be empty.");
             }
-            if (!(gameDto.GameType != "Regular" || gameDto.GameType != "Playoff" || gameDto.GameType != "Finals"))
+            if (gameDto.GameType != "Regular" && gameDto.GameType != "Playoff" && gameDto.GameType != "Finals")
             {
                 throw new ArgumentException("Must be 'Regular', 'Playoff' or 'Finals'.");
             }
-            if (!(gameDto.State != "Scheduled" || gameDto.State != "InProgress" || gameDto.State != "Completed" || gameDto.State != "Suspended"))
+            if (gameDto.State != "Scheduled" && gameDto.State != "InProgress" && gameDto.State != "Completed" && gameDto.State != "Suspended")
             {
                 throw new ArgumentException("Invalid game state. Must be 'Scheduled', 'InProgress', 'Suspended' or 'Completed'.");
             }

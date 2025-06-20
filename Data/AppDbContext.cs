@@ -20,24 +20,25 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<BasketballGame> BasketballGames { get; set; }
 
-    public virtual DbSet<BasketballTeam> BasketballTeams { get; set; }
-
     public virtual DbSet<League> Leagues { get; set; }
 
     public virtual DbSet<Player> Players { get; set; }
 
     public virtual DbSet<PlayerBasketballStat> PlayerBasketballStats { get; set; }
 
+    public virtual DbSet<PlayerTeam> PlayerTeams { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Sport> Sports { get; set; }
+
+    public virtual DbSet<Team> Teams { get; set; }
 
     public virtual DbSet<TeamTournament> TeamTournaments { get; set; }
 
     public virtual DbSet<Tournament> Tournaments { get; set; }
 
     public virtual DbSet<UserLeague> UserLeagues { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
@@ -115,20 +116,6 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.TournamentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_game_tournament");
-        });
-
-        modelBuilder.Entity<BasketballTeam>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("basketball_team_pkey");
-
-            entity.ToTable("basketball_team", "basketball");
-
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
-            entity.Property(e => e.Name)
-                .HasMaxLength(100)
-                .HasColumnName("name");
         });
 
         modelBuilder.Entity<League>(entity =>
@@ -218,6 +205,32 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("fk_stats_player");
         });
 
+        modelBuilder.Entity<PlayerTeam>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("player_team_pkey");
+
+            entity.ToTable("player_team", "core");
+
+            entity.HasIndex(e => new { e.PlayerId, e.TeamId, e.TournamentId }, "player_team_player_id_team_id_tournament_id_key").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.PlayerId).HasColumnName("player_id");
+            entity.Property(e => e.TeamId).HasColumnName("team_id");
+            entity.Property(e => e.TournamentId).HasColumnName("tournament_id");
+
+            entity.HasOne(d => d.Player).WithMany(p => p.PlayerTeams)
+                .HasForeignKey(d => d.PlayerId)
+                .HasConstraintName("player_team_player_id_fkey");
+
+            entity.HasOne(d => d.Team).WithMany(p => p.PlayerTeams)
+                .HasForeignKey(d => d.TeamId)
+                .HasConstraintName("player_team_team_id_fkey");
+
+            entity.HasOne(d => d.Tournament).WithMany(p => p.PlayerTeams)
+                .HasForeignKey(d => d.TournamentId)
+                .HasConstraintName("player_team_tournament_id_fkey");
+        });
+
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("role_pkey");
@@ -248,17 +261,40 @@ public partial class AppDbContext : DbContext
                 .HasColumnName("name");
         });
 
-        modelBuilder.Entity<TeamTournament>(entity =>
+        modelBuilder.Entity<Team>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("team_tournament_pkey");
+            entity.HasKey(e => e.Id).HasName("basketball_team_pkey");
 
-            entity.ToTable("team_tournament", "basketball");
-
-            entity.HasIndex(e => new { e.TeamId, e.TournamentId }, "team_tournament_team_id_tournament_id_key").IsUnique();
+            entity.ToTable("team", "core");
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnName("created_at");
+            entity.Property(e => e.LogoUrl).HasColumnName("logo_url");
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<TeamTournament>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("team_tournament_pkey");
+
+            entity.ToTable("team_tournament", "core");
+
+            entity.HasIndex(e => new { e.TeamId, e.TournamentId }, "team_tournament_team_id_tournament_id_key").IsUnique();
+
+            entity.HasIndex(e => new { e.TeamId, e.TournamentId }, "uq_team_tournament").IsUnique();
+
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
+            entity.Property(e => e.CreateAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnName("create_at");
             entity.Property(e => e.TeamId).HasColumnName("team_id");
             entity.Property(e => e.TournamentId).HasColumnName("tournament_id");
 
@@ -277,7 +313,7 @@ public partial class AppDbContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("tournament_pkey");
 
-            entity.ToTable("tournament", "basketball");
+            entity.ToTable("tournament", "core");
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
@@ -302,6 +338,8 @@ public partial class AppDbContext : DbContext
             entity.HasKey(e => e.Id).HasName("user_league_pkey");
 
             entity.ToTable("user_league", "core");
+
+            entity.HasIndex(e => new { e.PlayerId, e.LeagueId }, "uq_user_league").IsUnique();
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()

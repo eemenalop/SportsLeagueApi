@@ -17,5 +17,7 @@ public partial class Player
 
     public virtual ICollection<PlayerBasketballStat> PlayerBasketballStats { get; set; } = new List<PlayerBasketballStat>();
 
+    public virtual ICollection<PlayerTeam> PlayerTeams { get; set; } = new List<PlayerTeam>();
+
     public virtual ICollection<UserLeague> UserLeagues { get; set; } = new List<UserLeague>();
 }

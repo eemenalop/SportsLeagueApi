@@ -57,6 +57,10 @@ namespace SportsLeagueApi.Controllers.Basketball.BasketballGameController
             {
                 return BadRequest(ex.Message);
             }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Basketball game not found: {ex.Message}");
+            }
             catch (System.Exception)
             {
                 return StatusCode(500, "An error occurred while updating the basketball game.");
@@ -80,6 +84,10 @@ namespace SportsLeagueApi.Controllers.Basketball.BasketballGameController
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Basketball game not found: {ex.Message}");
             }
             catch (Exception ex)
             {

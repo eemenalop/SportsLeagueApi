@@ -1,8 +1,8 @@
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Services.BaseService;
-using SportsLeagueApi.Dtos.Basketball.TournamentDtos;
+using SportsLeagueApi.Dtos.Core.TournamentDtos;
 
-namespace SportsLeagueApi.Services.Basketball.TournamentService
+namespace SportsLeagueApi.Services.Core.TournamentService
 {
     public interface ITournamentService : IBaseService<Tournament>
     {

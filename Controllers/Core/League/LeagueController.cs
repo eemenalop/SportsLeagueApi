@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using SportsLeagueApi.Dtos.LeagueDtos;
 using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Services.LeagueService;
+using SportsLeagueApi.Services.Core.LeagueService;
 
 namespace SportsLeagueApi.Controllers
 {
@@ -51,7 +51,7 @@ namespace SportsLeagueApi.Controllers
                 }
                 return Ok(updatedLeague);
             }
-            catch(ArgumentException ex)
+            catch(KeyNotFoundException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -74,9 +74,9 @@ namespace SportsLeagueApi.Controllers
                 }
                 return NoContent();
             }
-            catch(ArgumentException ex)
+            catch(KeyNotFoundException ex)
             {
-                return BadRequest(ex.Message);
+                return NotFound(ex.Message);
             }
             catch(Exception ex)
             {

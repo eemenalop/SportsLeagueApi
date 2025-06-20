@@ -1,9 +1,9 @@
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Services.BaseService;
-using SportsLeagueApi.Dtos.Basketball.TournamentDtos;
+using SportsLeagueApi.Dtos.Core.TournamentDtos;
 using SportsLeagueApi.Data;
 
-namespace SportsLeagueApi.Services.Basketball.TournamentService
+namespace SportsLeagueApi.Services.Core.TournamentService
 {
     public class TournamentService : BaseService<Tournament>, ITournamentService
     {
@@ -50,6 +50,10 @@ namespace SportsLeagueApi.Services.Basketball.TournamentService
                 StartDate = tournamentDto.StartDate,
                 Status = tournamentDto.Status
             };
+            var existingLeageue = await _tournamentContext.Leagues.FindAsync(tournamentDto.LeagueId);
+            if (existingLeageue == null)
+                throw new KeyNotFoundException($"League with ID {tournamentDto.LeagueId} not found.");
+            
 
             await _tournamentContext.Tournaments.AddAsync(tournament);
             await _context.SaveChangesAsync();
@@ -61,12 +65,16 @@ namespace SportsLeagueApi.Services.Basketball.TournamentService
             ValitateTournamentDto(tournamentDto);
             if (id <= 0) throw new ArgumentException("Invalid tournament ID.");
             var tournament = await _tournamentContext.Tournaments.FindAsync(id);
-            if (tournament == null) throw new ArgumentException($"Tournament with ID {id} not found.");
+            if (tournament == null) throw new KeyNotFoundException($"Tournament with ID {id} not found.");
 
             tournament.Name = tournamentDto.Name;
             tournament.LeagueId = tournamentDto.LeagueId;
             tournament.StartDate = tournamentDto.StartDate;
             tournament.Status = tournamentDto.Status;
+
+            var existingLeague = await _tournamentContext.Leagues.FindAsync(tournamentDto.LeagueId);
+            if (existingLeague == null)
+                throw new KeyNotFoundException($"League with ID {tournamentDto.LeagueId} not found.");
 
             _tournamentContext.Tournaments.Update(tournament);
             await _context.SaveChangesAsync();
@@ -78,7 +86,8 @@ namespace SportsLeagueApi.Services.Basketball.TournamentService
         {
             if (id <= 0) throw new ArgumentException("Invalid tournament ID.");
             var tournament = await _tournamentContext.Tournaments.FindAsync(id);
-            if (tournament == null) return false;
+            if (tournament == null)
+                throw new KeyNotFoundException($"Tournament with ID {id} not found.");
 
             _tournamentContext.Tournaments.Remove(tournament);
             await _context.SaveChangesAsync();

@@ -3,7 +3,7 @@ using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Dtos.AccountDtos;
 
-namespace SportsLeagueApi.Services.AccountService
+namespace SportsLeagueApi.Services.Core.AccountService
 {
     public interface IAccountService : IBaseService<Account>
     {
