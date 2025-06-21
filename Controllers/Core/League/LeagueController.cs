@@ -67,11 +67,7 @@ namespace SportsLeagueApi.Controllers
         {
             try
             {
-                var league = await _leagueService.GetById(id);
-                if (league == null)
-                {
-                    return NotFound($"League with ID {id} not found.");
-                }
+                var league = await _leagueService.DeleteLeague(id);
                 return NoContent();
             }
             catch(KeyNotFoundException ex)

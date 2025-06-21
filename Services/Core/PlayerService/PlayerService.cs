@@ -1,17 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Data;
 using Microsoft.AspNetCore.Authentication;
-using SportsLeagueApi.Dtos.PlayerDtos;
+using SportsLeagueApi.Dtos.Core.PlayerDtos;
 
 namespace SportsLeagueApi.Services.Core.PlayerService
 {
-    public class PlayerService : BaseService<Player>, IPlayerService
+    public class PlayerService : IPlayerService
     {
         private readonly AppDbContext _playerContext;
 
-        public PlayerService(AppDbContext context) : base(context)
+        public PlayerService(AppDbContext context)
         {
             _playerContext = context;
         }
@@ -54,6 +53,35 @@ namespace SportsLeagueApi.Services.Core.PlayerService
                 throw new ArgumentException("Player document ID must contain only digits.");
             }
         }
+        public async Task<IEnumerable<Player>> GetAllPlayers()
+        {
+            if (_playerContext.Players == null)
+            {
+                throw new InvalidOperationException("Player context is not initialized.");
+            }
+            return await _playerContext.Players.ToListAsync();
+        }
+        public async Task<PlayerResponseDto> GetPlayerById(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid player ID.");
+            }
+            var player = await _playerContext.Players.FindAsync(id);
+            if (player == null)
+            {
+                throw new KeyNotFoundException($"Player with ID {id} not found.");
+            }
+            var existingPlayer = new PlayerResponseDto
+            {
+                Id = player.Id,
+                Name = player.Name,
+                LastName = player.LastName,
+                DocumentId = player.DocumentId,
+                Position = player.Position ?? string.Empty
+            };
+            return existingPlayer;
+        }
         public async Task<Player> CreatePlayer(CreatePlayerDto playerDto)
         {
             ValidatePlayerDto(playerDto);
@@ -66,7 +94,7 @@ namespace SportsLeagueApi.Services.Core.PlayerService
             };
             await _playerContext.Players.AddAsync(newPlayer);
             await _playerContext.SaveChangesAsync();
-            
+
             var userLeague = new UserLeague
             {
                 PlayerId = newPlayer.Id,

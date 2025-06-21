@@ -158,6 +158,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.DocumentId)
                 .HasMaxLength(100)
                 .HasColumnName("document_id");
+            entity.Property(e => e.Email)
+                .HasMaxLength(50)
+                .HasColumnName("email");
             entity.Property(e => e.LastName)
                 .HasMaxLength(50)
                 .HasColumnName("last_name");
@@ -286,8 +289,6 @@ public partial class AppDbContext : DbContext
             entity.ToTable("team_tournament", "core");
 
             entity.HasIndex(e => new { e.TeamId, e.TournamentId }, "team_tournament_team_id_tournament_id_key").IsUnique();
-
-            entity.HasIndex(e => new { e.TeamId, e.TournamentId }, "uq_team_tournament").IsUnique();
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()

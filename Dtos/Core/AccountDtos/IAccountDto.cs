@@ -1,4 +1,4 @@
-namespace SportsLeagueApi.Dtos.AccountDtos
+namespace SportsLeagueApi.Dtos.Core.AccountDtos
 {
     public interface IAccountDto
     {
@@ -7,7 +7,7 @@ namespace SportsLeagueApi.Dtos.AccountDtos
         string Email { get; set; }
         string Password { get; set; }
         int RoleId { get; set; }
-        string DocumentId { get; set; }
+        string? DocumentId { get; set; }
         string? Phone { get; set; }
         DateTime? DateOfBirth { get; set; }
     }

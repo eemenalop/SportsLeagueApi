@@ -11,7 +11,7 @@ public partial class TeamTournament
 
     public int TournamentId { get; set; }
 
-    public DateTime? CreateAt { get; set; }
+    public DateTime CreateAt { get; set; }
 
     public virtual Team Team { get; set; } = null!;
 

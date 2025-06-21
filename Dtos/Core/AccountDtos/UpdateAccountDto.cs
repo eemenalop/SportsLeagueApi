@@ -1,4 +1,4 @@
-namespace SportsLeagueApi.Dtos.AccountDtos
+namespace SportsLeagueApi.Dtos.Core.AccountDtos
 
 {
     public class UpdateAccountDto : IAccountDto
@@ -13,7 +13,7 @@ namespace SportsLeagueApi.Dtos.AccountDtos
 
         public int RoleId { get; set; }
 
-        public string DocumentId { get; set; } = null!;
+        public string? DocumentId { get; set; } = null!;
 
         public string? Phone { get; set; }
 

@@ -1,4 +1,4 @@
-﻿namespace SportsLeagueApi.Dtos.AccountDtos
+﻿namespace SportsLeagueApi.Dtos.Core.AccountDtos
 {
     public class CreateAccountDto : IAccountDto
     {
@@ -12,7 +12,7 @@
 
         public int RoleId { get; set; }
 
-        public string DocumentId { get; set; } = null!;
+        public string? DocumentId { get; set; } = null!;
 
         public string? Phone { get; set; }
 

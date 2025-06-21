@@ -1,4 +1,4 @@
-namespace SportsLeagueApi.Dtos.PlayerDtos
+namespace SportsLeagueApi.Dtos.Core.PlayerDtos
 {
     public class CreatePlayerDto : IPlayerDto
     {

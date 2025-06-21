@@ -1,16 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Data;
-using SportsLeagueApi.Dtos.AccountDtos;
+using SportsLeagueApi.Dtos.Core.AccountDtos;
 using SportsLeagueApi.Dtos.LeagueDtos;
 
 namespace SportsLeagueApi.Services.Core.AccountService
 {
-    public class AccountService : BaseService<Account>, IAccountService
+    public class AccountService : IAccountService
     {
         private readonly AppDbContext _accountContext;
-        public AccountService(AppDbContext context) : base(context)
+        public AccountService(AppDbContext context)
         {
             _accountContext = context;
         }
@@ -54,7 +53,38 @@ namespace SportsLeagueApi.Services.Core.AccountService
             if (accountDto.DateOfBirth != null && accountDto.DateOfBirth < DateTime.Now.AddYears(-120))
                 throw new ArgumentException("Date of birth is not valid.");
         }
-
+        public async Task<IEnumerable<Account>> GetAllAccounts()
+        {
+            if (_accountContext.Accounts == null)
+            {
+                throw new ArgumentException("Account context is not initialized.");
+            }
+            return await _accountContext.Accounts.ToListAsync();
+        }
+        public async Task<AccountResponseDto> GetAccountById(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid account ID provided.");
+            }
+            var account = await _accountContext.Accounts.FindAsync(id);
+            if (account == null)
+            {
+                throw new KeyNotFoundException($"Account with ID {id} not found.");
+            }
+            var existingAccount = new AccountResponseDto
+            {
+                Id = account.Id,
+                Name = account.Name,
+                LastName = account.LastName,
+                Email = account.Email,
+                RoleId = account.RoleId,
+                DocumentId = account.DocumentId!,
+                Phone = account.Phone!,
+                DateOfBirth = account.DateOfBirth ?? default(DateTime)
+            };
+            return existingAccount;
+        }
         public async Task<Account> CreateAccount(CreateAccountDto accountDto)
         {
             ValidateAccountDto(accountDto);
