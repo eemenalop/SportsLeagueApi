@@ -2,13 +2,14 @@ using SportsLeagueApi.Models;
 using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Dtos.Core.TournamentDtos;
 using SportsLeagueApi.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace SportsLeagueApi.Services.Core.TournamentService
 {
-    public class TournamentService : BaseService<Tournament>, ITournamentService
+    public class TournamentService : ITournamentService
     {
         private readonly AppDbContext _tournamentContext;
-        public TournamentService(AppDbContext context) : base(context)
+        public TournamentService(AppDbContext context)
         {
             _tournamentContext = context;
         }
@@ -40,6 +41,19 @@ namespace SportsLeagueApi.Services.Core.TournamentService
             if (!(tournamentDto.Status != "Active" || tournamentDto.Status != "Canceled" || tournamentDto.Status != "Finished"))
                 throw new ArgumentException("Status must be either 'Active', 'Canceled' or 'Finished'.");
         }
+        public async Task<IEnumerable<Tournament>> GetAllTournaments()
+        {
+            if (_tournamentContext.Tournaments == null)
+                throw new KeyNotFoundException("No tournaments found in the database.");
+            return await _tournamentContext.Tournaments.ToListAsync();
+        }
+        public async Task<Tournament> GetTournamentById(int id)
+        {
+            if (id <= 0) throw new ArgumentException("Invalid tournament ID.");
+            var tournament = await _tournamentContext.Tournaments.FindAsync(id);
+            if (tournament == null) throw new KeyNotFoundException($"Tournament with ID {id} not found.");
+            return tournament;
+        }
         public async Task<Tournament> CreateTournament(CreateTournamentDto tournamentDto)
         {
             ValitateTournamentDto(tournamentDto);
@@ -53,10 +67,10 @@ namespace SportsLeagueApi.Services.Core.TournamentService
             var existingLeageue = await _tournamentContext.Leagues.FindAsync(tournamentDto.LeagueId);
             if (existingLeageue == null)
                 throw new KeyNotFoundException($"League with ID {tournamentDto.LeagueId} not found.");
-            
+
 
             await _tournamentContext.Tournaments.AddAsync(tournament);
-            await _context.SaveChangesAsync();
+            await _tournamentContext.SaveChangesAsync();
             return tournament;
         }
 
@@ -77,7 +91,7 @@ namespace SportsLeagueApi.Services.Core.TournamentService
                 throw new KeyNotFoundException($"League with ID {tournamentDto.LeagueId} not found.");
 
             _tournamentContext.Tournaments.Update(tournament);
-            await _context.SaveChangesAsync();
+            await _tournamentContext.SaveChangesAsync();
 
             return tournament;
         }
@@ -90,7 +104,7 @@ namespace SportsLeagueApi.Services.Core.TournamentService
                 throw new KeyNotFoundException($"Tournament with ID {id} not found.");
 
             _tournamentContext.Tournaments.Remove(tournament);
-            await _context.SaveChangesAsync();
+            await _tournamentContext.SaveChangesAsync();
 
             return true;
         }

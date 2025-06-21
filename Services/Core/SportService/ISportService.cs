@@ -1,11 +1,12 @@
-using SportsLeagueApi.Dtos.SportDtos;
+using SportsLeagueApi.Dtos.Core.SportDtos;
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Services.BaseService;
 
 namespace SportsLeagueApi.Services.Core.SportService
 {
-    public interface ISportService : IBaseService<Sport>
+    public interface ISportService
     {
+        Task<IEnumerable<Sport>> GetAllSports();
+        Task<Sport> GetSportById(int id);
         Task<Sport> CreateSport(CreateSportDto sportDto);
         Task<Sport> UpdateSport(int id, UpdateSportDto sportDto);
         Task<bool> DeleteSport(int id);

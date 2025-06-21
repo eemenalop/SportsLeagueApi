@@ -2,7 +2,6 @@
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Data;
 using SportsLeagueApi.Dtos.Core.AccountDtos;
-using SportsLeagueApi.Dtos.LeagueDtos;
 
 namespace SportsLeagueApi.Services.Core.AccountService
 {
@@ -110,7 +109,7 @@ namespace SportsLeagueApi.Services.Core.AccountService
             ValidateAccountDto(accountDto);
             if (id <= 0)
             {
-                throw new ArgumentException("Invalid league ID provided.");
+                throw new ArgumentException("Invalid Account ID provided.");
             }
             var existingUser = await _accountContext.Accounts.FindAsync(id);
             if (existingUser == null)

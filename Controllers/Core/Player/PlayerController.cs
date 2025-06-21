@@ -29,9 +29,13 @@ namespace SportsLeagueApi.Controllers
                 }
                 return Ok(players);
             }
+            catch (ArgumentException ex)
+            {
+                return BadRequest("Error retrieving players: " + ex.Message);
+            }
             catch (Exception ex)
             {
-                return StatusCode(500, "Server error while retrieving players: " + ex.Message);
+                return StatusCode(500, $"Server error while retrieving players: {ex.Message}");
             }
         }
         [HttpGet("{id}")]
@@ -55,7 +59,7 @@ namespace SportsLeagueApi.Controllers
                 return StatusCode(500, "Server error while retrieving player: " + ex.Message);
             }
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> CreatePlayer([FromBody] CreatePlayerDto playerDto)
         {

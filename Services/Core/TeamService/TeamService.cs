@@ -1,16 +1,16 @@
 using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Dtos.Basketball.BasketballTeamDtos;
+using SportsLeagueApi.Dtos.Core.TeamDtos;
 using SportsLeagueApi.Services.Core.TeamService;
 using SportsLeagueApi.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace SportsLeagueApi.Services.Core.TeamService
 {
-    public class TeamService : BaseService<Team>, ITeamService
+    public class TeamService : ITeamService
     {
         private readonly AppDbContext _teamContext;
-        public TeamService(AppDbContext teamContext) : base(teamContext)
+        public TeamService(AppDbContext teamContext)
         {
             _teamContext = teamContext;
         }
@@ -33,6 +33,27 @@ namespace SportsLeagueApi.Services.Core.TeamService
             {
                 throw new ArgumentException("Team name must be between 3 and 50 characters long.");
             }
+        }
+        public async Task<IEnumerable<Team>> GetAllTeams()
+        {
+            if (_teamContext.Teams == null)
+            {
+                throw new KeyNotFoundException("Teams context is not initialized.");
+            }
+            return await _teamContext.Teams.ToListAsync();
+        }
+        public async Task<Team> GetTeamById(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid team ID provided.", nameof(id));
+            }
+            var team = await _teamContext.Teams.FindAsync(id);
+            if (team == null)
+            {
+                throw new KeyNotFoundException($"Team with ID {id} not found.");
+            }
+            return team;
         }
 
         public async Task<TeamResponseDto> CreateTeam(CreateTeamDto teamDto)

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using SportsLeagueApi.Dtos.LeagueDtos;
+using SportsLeagueApi.Dtos.Core.LeagueDtos;
 using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Services.Core.LeagueService;
@@ -9,12 +9,54 @@ namespace SportsLeagueApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LeagueController : BaseController<League>
+    public class LeagueController : Controller
     {
         private readonly ILeagueService _leagueService;
-        public LeagueController(ILeagueService leagueService): base(leagueService)
+        public LeagueController(ILeagueService leagueService)
         {
             _leagueService = leagueService;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllLeagues()
+        {
+            try
+            {
+                var leagues = await _leagueService.GetAllLeagues();
+                if (leagues == null || !leagues.Any())
+                {
+                    return NotFound("No leagues found.");
+                }
+                return Ok(leagues);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, $"Server error while retrieving leagues: {ex.Message}");
+            }
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetLeagueById(int id)
+        {
+            try
+            {
+                var league = await _leagueService.GetLeagueById(id);
+                if (league == null)
+                {
+                    return NotFound($"League with ID {id} not found.");
+                }
+                return Ok(league);
+            }
+            catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Server error while retrieving league: {ex.Message}");
+            }
         }
         [HttpPost]
         public async Task<IActionResult> CreateLeague([FromBody] CreateLeagueDto leagueDto)

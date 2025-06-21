@@ -1,4 +1,4 @@
-namespace SportsLeagueApi.Dtos.LeagueDtos
+namespace SportsLeagueApi.Dtos.Core.LeagueDtos
 {
     public interface ILeagueDto
     {

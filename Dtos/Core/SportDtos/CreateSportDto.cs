@@ -1,4 +1,4 @@
-namespace SportsLeagueApi.Dtos.SportDtos
+namespace SportsLeagueApi.Dtos.Core.SportDtos
 {
     public class CreateSportDto : ISportDto
     {

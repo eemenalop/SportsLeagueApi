@@ -1,16 +1,15 @@
-using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Dtos.RoleDtos;
+using SportsLeagueApi.Dtos.Core.RoleDtos;
 using SportsLeagueApi.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace SportsLeagueApi.Services.Core.RoleService
 {
-    public class RoleService : BaseService<Role>, IRoleService
+    public class RoleService : IRoleService
     {
         private readonly AppDbContext _roleContext;
 
-        public RoleService(AppDbContext context) : base(context)
+        public RoleService(AppDbContext context)
         {
             _roleContext = context;
         }
@@ -44,6 +43,28 @@ namespace SportsLeagueApi.Services.Core.RoleService
             {
                 throw new ArgumentException("Role description cannot exceed 500 characters.");
             }
+        }
+        public async Task<IEnumerable<Role>> GetAllRoles()
+        {
+            var roles = await _roleContext.Roles.ToListAsync();
+            if (roles == null || roles.Count == 0)
+            {
+                throw new KeyNotFoundException("No roles found.");
+            }
+            return roles;
+        }
+        public async Task<Role> GetRoleById(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid role ID.");
+            }
+            var role = await _roleContext.Roles.FindAsync(id);
+            if (role == null)
+            {
+                throw new KeyNotFoundException($"Role with ID {id} not found.");
+            }
+            return role;
         }
         public async Task<Role> CreateRole(CreateRoleDto roleDto)
         {

@@ -2,20 +2,53 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportsLeagueApi.Services.Core.RoleService;
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Dtos.RoleDtos;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using SportsLeagueApi.Dtos.Core.RoleDtos;
 
 namespace SportsLeagueApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleController : BaseController<Role>
+    public class RoleController : Controller
     {
         private readonly IRoleService _roleService;
-        public RoleController(IRoleService roleService) : base(roleService)
+        public RoleController(IRoleService roleService)
         {
-
             _roleService = roleService;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllRole()
+        {
+            try
+            {
+                var roles = await _roleService.GetAllRoles();
+                return Ok(roles);
+            }
+            catch(ArgumentException)
+            {
+                return NotFound("No Role found");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Server error while retrieving players: {ex.Message}");
+            }
+        }
+        [HttpGet("{id}")]
+
+        public async Task<IActionResult> GetRoleById(int id)
+        {
+            try
+            {
+                var existingRole = await _roleService.GetRoleById(id);
+                return Ok(existingRole);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Server error while retrieving role:{ex.Message}");
+            }
         }
 
         [HttpPost]
@@ -28,7 +61,7 @@ namespace SportsLeagueApi.Controllers
                 {
                     return BadRequest("Error creating role");
                 }
-                return CreatedAtAction(nameof(GetById), new { id = newRole.Id }, newRole);
+                return CreatedAtAction(nameof(GetRoleById), new { id = newRole.Id }, newRole);
 
             }
             catch (ArgumentException ex)
@@ -72,7 +105,7 @@ namespace SportsLeagueApi.Controllers
         {
             try
             {
-                var role = await _roleService.GetById(id);
+                var role = await _roleService.GetRoleById(id);
                 if (role == null)
                 {
                     return NotFound($"Role with ID {id} not found.");

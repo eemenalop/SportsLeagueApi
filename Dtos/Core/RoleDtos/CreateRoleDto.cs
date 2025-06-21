@@ -1,4 +1,4 @@
-namespace SportsLeagueApi.Dtos.RoleDtos
+namespace SportsLeagueApi.Dtos.Core.RoleDtos
 {
     public class CreateRoleDto : IRoleDto
     {

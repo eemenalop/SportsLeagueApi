@@ -1,16 +1,16 @@
-using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Data;
-using SportsLeagueApi.Dtos.LeagueDtos;
+using SportsLeagueApi.Dtos.Core.LeagueDtos;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace SportsLeagueApi.Services.Core.LeagueService
 {
-    public class LeagueService : BaseService<League>, ILeagueService
+    public class LeagueService : ILeagueService
     {
         private readonly AppDbContext _leagueContext;
 
-        public LeagueService(AppDbContext context) : base(context)
+        public LeagueService(AppDbContext context)
         {
             _leagueContext = context;
         }
@@ -32,6 +32,27 @@ namespace SportsLeagueApi.Services.Core.LeagueService
             {
                 throw new ArgumentException("Invalid admin ID provided.");
             }
+        }
+        public async Task<IEnumerable<League>> GetAllLeagues()
+        {
+            if (_leagueContext.Leagues == null)
+            {
+                throw new ArgumentException("No leagues found in the database.");
+            }
+            return await _leagueContext.Leagues.Include(t=>t.Tournaments).Include(u=>u.UserLeagues).ToListAsync();
+        }
+        public async Task<League> GetLeagueById(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid league ID provided.");
+            }
+            var league = await _leagueContext.Leagues.FindAsync(id);
+            if (league == null)
+            {
+                throw new KeyNotFoundException($"League with ID {id} not found");
+            }
+            return league;
         }
         public async Task<League> CreateLeague(CreateLeagueDto leagueDto)
         {

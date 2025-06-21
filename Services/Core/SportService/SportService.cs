@@ -3,15 +3,15 @@ using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Services.Core.SportService;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Data;
-using SportsLeagueApi.Dtos.SportDtos;
+using SportsLeagueApi.Dtos.Core.SportDtos;
 
 namespace SportsLeagueApi.Services.Core.SportService
 {
-    public class SportService : BaseService<Sport>, ISportService
+    public class SportService : ISportService
     {
         private readonly AppDbContext _sportContext;
 
-        public SportService(AppDbContext context) : base(context)
+        public SportService(AppDbContext context)
         {
             _sportContext = context;
         }
@@ -37,6 +37,27 @@ namespace SportsLeagueApi.Services.Core.SportService
             {
                 throw new ArgumentException("Sport name must start with an uppercase letter.", nameof(sportDto.Name));
             }
+        }
+        public async Task<IEnumerable<Sport>> GetAllSports()
+        {
+            if (_sportContext.Sports == null)
+            {
+                throw new ArgumentException("Sports context is not initialized.");
+            }
+            return await _sportContext.Sports.ToListAsync();
+        }
+        public async Task<Sport> GetSportById(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid sport ID provided.", nameof(id));
+            }
+            var sport = await _sportContext.Sports.FindAsync(id);
+            if (sport == null)
+            {
+                throw new KeyNotFoundException($"Sport with ID {id} not found.");
+            }
+            return sport;
         }
         public async Task<Sport> CreateSport(CreateSportDto sportDto)
         {

@@ -1,21 +1,66 @@
 using Microsoft.AspNetCore.Mvc;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Services.Core.TeamService;
-using SportsLeagueApi.Dtos.Basketball.BasketballTeamDtos;
+using SportsLeagueApi.Dtos.Core.TeamDtos;
 using SportsLeagueApi.Services.BaseService;
 
 namespace SportsLeagueApi.Controllers.Core.TeamController
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TeamController : BaseController<Team>
+    public class TeamController : Controller
     {
         private readonly ITeamService _teamService;
 
-        public TeamController(ITeamService teamService) : base(teamService)
+        public TeamController(ITeamService teamService)
         {
             _teamService = teamService;
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllTeams()
+        {
+            try
+            {
+                var teams = await _teamService.GetAllTeams();
+                return Ok(teams);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Error retrieving teams: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Server error while retrieving the teams: " + ex.Message);
+            }
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                    throw new ArgumentException("Invalid team ID.");
+                var team = await _teamService.GetTeamById(id);
+                if (team == null)
+                {
+                    return NotFound($"Team with ID {id} not found.");
+                }
+                return Ok(team);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Team with ID {id} not found: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Server error while retrieving the team: " + ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateTeam([FromBody] CreateTeamDto teamDto)
         {
@@ -32,7 +77,7 @@ namespace SportsLeagueApi.Controllers.Core.TeamController
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while creating the basketball team: " + ex.Message);
+                return StatusCode(500, "Server error while creating the team: " + ex.Message);
             }
         }
         [HttpPut("{id}")]
@@ -48,7 +93,7 @@ namespace SportsLeagueApi.Controllers.Core.TeamController
                 var updatedTeam = await _teamService.UpdateTeam(id, teamDto);
                 if (updatedTeam == null)
                 {
-                    return NotFound($"Basketball team with ID {id} not found.");
+                    return NotFound($"Team with ID {id} not found.");
                 }
                 return Ok(updatedTeam);
             }
@@ -62,7 +107,7 @@ namespace SportsLeagueApi.Controllers.Core.TeamController
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while updating the basketball team: " + ex.Message);
+                return StatusCode(500, "Server error while updating the team: " + ex.Message);
             }
         }
         [HttpDelete("{id}")]
@@ -76,7 +121,7 @@ namespace SportsLeagueApi.Controllers.Core.TeamController
                 var result = await _teamService.DeleteTeam(id);
                 if (!result)
                 {
-                    return NotFound($"Basketball team with ID {id} not found.");
+                    return NotFound($"Team with ID {id} not found.");
                 }
                 return NoContent();
             }
@@ -86,11 +131,11 @@ namespace SportsLeagueApi.Controllers.Core.TeamController
             }
             catch (KeyNotFoundException ex)
             {
-                return NotFound($"Basketball team not found: {ex.Message}");
+                return NotFound($"Team not found: {ex.Message}");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while deleting the basketball team: " + ex.Message);
+                return StatusCode(500, "Server error while deleting the team: " + ex.Message);
             }
         }
     }

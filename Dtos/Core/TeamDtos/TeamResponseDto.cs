@@ -1,4 +1,4 @@
-namespace SportsLeagueApi.Dtos.Basketball.BasketballTeamDtos
+namespace SportsLeagueApi.Dtos.Core.TeamDtos
 {
     public class TeamResponseDto
     {

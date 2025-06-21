@@ -57,7 +57,7 @@ namespace SportsLeagueApi.Services.Core.PlayerService
         {
             if (_playerContext.Players == null)
             {
-                throw new InvalidOperationException("Player context is not initialized.");
+                throw new ArgumentException("Player context is not initialized.");
             }
             return await _playerContext.Players.ToListAsync();
         }

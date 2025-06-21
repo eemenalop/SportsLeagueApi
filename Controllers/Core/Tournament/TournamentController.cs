@@ -2,20 +2,59 @@ using Microsoft.AspNetCore.Mvc;
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Services.Core.TournamentService;
 using SportsLeagueApi.Dtos.Core.TournamentDtos;
-using SportsLeagueApi.Services.BaseService;
 
 namespace SportsLeagueApi.Controllers.Core.TournamentController
 {
 
     [Route("api/[controller]")]
     [ApiController]
-    public class TournamentController : BaseController<Tournament>
+    public class TournamentController : Controller
     {
         private readonly ITournamentService _tournamentService;
 
-        public TournamentController(ITournamentService tournamentService) : base(tournamentService)
+        public TournamentController(ITournamentService tournamentService)
         {
             _tournamentService = tournamentService;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllTournaments()
+        {
+            try
+            {
+                var tournaments = await _tournamentService.GetAllTournaments();
+                return Ok(tournaments);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"No tournaments found: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Server error while retrieving tournaments: " + ex.Message);
+            }
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                    throw new ArgumentException("Invalid tournament ID.");
+                var tournament = await _tournamentService.GetTournamentById(id);
+                return Ok(tournament);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Tournament with ID {id} not found: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Server error while retrieving the tournament: " + ex.Message);
+            }
         }
 
         [HttpPost]
@@ -39,7 +78,7 @@ namespace SportsLeagueApi.Controllers.Core.TournamentController
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while creating the tournament: " + ex.Message);
+                return StatusCode(500, "Server error while creating the tournament: " + ex.Message);
             }
         }
 
@@ -70,7 +109,7 @@ namespace SportsLeagueApi.Controllers.Core.TournamentController
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while updating the tournament: " + ex.Message);
+                return StatusCode(500, "Server error while updating the tournament: " + ex.Message);
             }
         }
 
@@ -98,7 +137,7 @@ namespace SportsLeagueApi.Controllers.Core.TournamentController
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while deleting the tournament: " + ex.Message);
+                return StatusCode(500, "Server error while deleting the tournament: " + ex.Message);
             }
         }
     }
