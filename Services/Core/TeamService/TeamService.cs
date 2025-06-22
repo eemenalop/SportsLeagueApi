@@ -41,6 +41,7 @@ namespace SportsLeagueApi.Services.Core.TeamService
                 throw new KeyNotFoundException("Teams context is not initialized.");
             }
             return await _teamContext.Teams.ToListAsync();
+
         }
         public async Task<Team> GetTeamById(int id)
         {

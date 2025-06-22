@@ -5,7 +5,7 @@ using sportsLeagueApi.Dtos.Basketball.BasketballGameDtos;
 
 namespace SportsLeagueApi.Services.Basketball.BasketballGameService
 {
-    public interface IBasketballGameService : IBaseService<BasketballGame>
+    public interface IBasketballGameService
     {   Task<IEnumerable<BasketballGame>> GetAllBasketballGames();
         Task<BasketballGame> GetBasketballGameById(int id);
         Task<BasketballGame> CreateBasketballGame(CreateBasketballGameDto gameDto);

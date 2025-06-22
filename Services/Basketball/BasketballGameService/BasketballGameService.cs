@@ -4,14 +4,15 @@ using SportsLeagueApi.Dtos.Basketball.BasketballGameDtos;
 using SportsLeagueApi.Services.Basketball.BasketballGameService;
 using SportsLeagueApi.Data;
 using sportsLeagueApi.Dtos.Basketball.BasketballGameDtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace SportsLeagueApi.Services.Basketball.BasketballGameService
 {
-    public class BasketballGameService : BaseService<BasketballGame>, IBasketballGameService
+    public class BasketballGameService : IBasketballGameService
     {
         private readonly AppDbContext _basketballGameContext;
 
-        public BasketballGameService(AppDbContext basketballGameContext) : base(basketballGameContext)
+        public BasketballGameService(AppDbContext basketballGameContext)
         {
             _basketballGameContext = basketballGameContext;
         }
@@ -50,6 +51,27 @@ namespace SportsLeagueApi.Services.Basketball.BasketballGameService
             {
                 throw new ArgumentException("Invalid game state. Must be 'Scheduled', 'InProgress', 'Suspended' or 'Completed'.");
             }
+        }
+        public async Task<IEnumerable<BasketballGame>> GetAllBasketballGames()
+        {
+            if (_basketballGameContext.BasketballGames == null)
+            {
+                throw new KeyNotFoundException("No basketball games found in the database.");
+            }
+            return await _basketballGameContext.BasketballGames.ToListAsync();
+        }
+        public async Task<BasketballGame> GetBasketballGameById(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid game ID provided.", nameof(id));
+            }
+            var basketballGame = await _basketballGameContext.BasketballGames.FindAsync(id);
+            if (basketballGame == null)
+            {
+                throw new KeyNotFoundException($"Basketball game with ID {id} not found.");
+            }
+            return basketballGame;
         }
 
         public async Task<BasketballGame> CreateBasketballGame(CreateBasketballGameDto gameDto)

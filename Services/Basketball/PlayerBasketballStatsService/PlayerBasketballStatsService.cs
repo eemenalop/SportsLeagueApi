@@ -1,16 +1,16 @@
 using SportsLeagueApi.Models;
-using SportsLeagueApi.Services.BaseService;
 using SportsLeagueApi.Dtos.Basketball.PlayerBasketballStatsDtos;
 using SportsLeagueApi.Data;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 namespace SportsLeagueApi.Services.Basketball.PlayerBasketballStatsService
 {
-    public class PlayerBasketballStatsService : BaseService<PlayerBasketballStat>, IPlayerBasketballStatsService
+    public class PlayerBasketballStatsService : IPlayerBasketballStatsService
     {
         private readonly AppDbContext _playerBasketballStatsContext;
 
-        public PlayerBasketballStatsService(AppDbContext playerBasketballStatsContext) : base(playerBasketballStatsContext)
+        public PlayerBasketballStatsService(AppDbContext playerBasketballStatsContext)
         {
             _playerBasketballStatsContext = playerBasketballStatsContext;
         }
@@ -32,15 +32,36 @@ namespace SportsLeagueApi.Services.Basketball.PlayerBasketballStatsService
             {
                 if (prop.PropertyType == typeof(int))
                 {
-                    object val = prop.GetValue(basketStatsDto);
-                    int? value = val as int?;
-                    if (value.HasValue)
+                    object? val = prop.GetValue(basketStatsDto);
+                    if (val != null)
                     {
-                        if (value.Value < 0)
+                        int value = (int)val;
+                        if (value < 0)
                             throw new ArgumentException($"{prop.Name} cannot be negative.");
                     }
                 }
             }
+        }
+        public async Task<IEnumerable<PlayerBasketballStat>> GetAllPlayerBasketballStats()
+        {
+            if (_playerBasketballStatsContext.PlayerBasketballStats == null)
+            {
+                throw new KeyNotFoundException("No player basketball stats found.");
+            }
+            return await _playerBasketballStatsContext.PlayerBasketballStats.ToListAsync();
+        }
+        public async Task<PlayerBasketballStat> GetPlayerBasketballStatsById(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("ID must be greater than 0.");
+            }
+            var playerBasketballStat = await _playerBasketballStatsContext.PlayerBasketballStats.FindAsync(id);
+            if (playerBasketballStat == null)
+            {
+                throw new KeyNotFoundException($"PlayerBasketballStat with ID {id} not found.");
+            }
+            return playerBasketballStat;
         }
         public async Task<PlayerBasketballStat> CreatePlayerBasketballStats(CreatePlayerBasketballStatsDto basketStatsDto)
         {

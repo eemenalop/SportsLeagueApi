@@ -1,17 +1,62 @@
 using SportsLeagueApi.Models;
 using SportsLeagueApi.Services.Basketball.PlayerBasketballStatsService;
 using SportsLeagueApi.Dtos.Basketball.PlayerBasketballStatsDtos;
-using SportsLeagueApi.Services.BaseService;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SportsLeagueApi.Controllers.Basketball.playerBasketballStats
+namespace SportsLeagueApi.Controllers.Basketball.PlayerBasketballStats
 {
-    public class PlayerBasketballStatsController : BaseController<PlayerBasketballStat>
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PlayerBasketballStatsController : Controller
     {
         private readonly IPlayerBasketballStatsService _playerBasketballStats;
-        public PlayerBasketballStatsController(IPlayerBasketballStatsService playerBasketballStats) : base(playerBasketballStats)
+        public PlayerBasketballStatsController(IPlayerBasketballStatsService playerBasketballStats)
         {
             _playerBasketballStats = playerBasketballStats;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllPlayerBasketballStats()
+        {
+            try
+            {
+                var stats = await _playerBasketballStats.GetAllPlayerBasketballStats();
+                return Ok(stats);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound("No player basketball stats found: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while retrieving player basketball stats: " + ex.Message);
+            }
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPlayerBasketballStatsById(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                    throw new ArgumentException("Invalid stats ID.");
+                var stats = await _playerBasketballStats.GetPlayerBasketballStatsById(id);
+                if (stats == null)
+                {
+                    return NotFound($"Player basketball stats with ID {id} not found.");
+                }
+                return Ok(stats);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Player basketball stats not found: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while retrieving the basketball stats: " + ex.Message);
+            }
         }
 
         [HttpPost]
@@ -22,7 +67,7 @@ namespace SportsLeagueApi.Controllers.Basketball.playerBasketballStats
                 if (basketStatsDto == null)
                     throw new ArgumentException("Basketball stats data cannot be null.");
                 var stats = await _playerBasketballStats.CreatePlayerBasketballStats(basketStatsDto);
-                return CreatedAtAction(nameof(GetById), new { id = stats.Id }, stats);
+                return CreatedAtAction(nameof(GetPlayerBasketballStatsById), new { id = stats.Id }, stats);
             }
             catch (ArgumentException ex)
             {
@@ -91,6 +136,6 @@ namespace SportsLeagueApi.Controllers.Basketball.playerBasketballStats
                 return StatusCode(500, "An error occurred while deleting the basketball stats: " + ex.Message);
             }
         }
-        
+
     } 
 }

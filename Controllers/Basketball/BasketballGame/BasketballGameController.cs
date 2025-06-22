@@ -9,13 +9,61 @@ namespace SportsLeagueApi.Controllers.Basketball.BasketballGameController
 
     [Route("api/[controller]")]
     [ApiController]
-    public class BasketballGameController : BaseController<BasketballGame>
+    public class BasketballGameController : Controller
     {
         private readonly IBasketballGameService _basketballGameService;
 
-        public BasketballGameController(IBasketballGameService basketballGameService) : base(basketballGameService)
+        public BasketballGameController(IBasketballGameService basketballGameService)
         {
             _basketballGameService = basketballGameService;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllBasketballGames()
+        {
+            try
+            {
+                var games = await _basketballGameService.GetAllBasketballGames();
+                if (games == null || !games.Any())
+                    return NotFound("No basketball games found.");
+
+                return Ok(games);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound("No basketball games found: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while retrieving basketball games: " + ex.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBasketballGameById(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                    throw new ArgumentException("Invalid game ID.");
+
+                var game = await _basketballGameService.GetBasketballGameById(id);
+                if (game == null)
+                    return NotFound($"Basketball game with ID {id} not found.");
+
+                return Ok(game);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound($"Basketball game not found: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while retrieving the basketball game: " + ex.Message);
+            }
         }
 
         [HttpPost]
@@ -27,7 +75,7 @@ namespace SportsLeagueApi.Controllers.Basketball.BasketballGameController
                     throw new ArgumentException("Game data cannot be null.");
 
                 var game = await _basketballGameService.CreateBasketballGame(gameDto);
-                return CreatedAtAction(nameof(GetById), new { id = game.Id }, game);
+                return CreatedAtAction(nameof(GetBasketballGameById), new { id = game.Id }, game);
             }
             catch (ArgumentException ex)
             {
